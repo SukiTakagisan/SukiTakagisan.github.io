@@ -1,0 +1,2027 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Buuctfmisc">
+    <meta name="description" content="记录自己的生活和学习的路程">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="baidu-site-verification" content="code-ZlodHEgStx" />
+    <meta name="google-site-verification" content="eTFvpWCZs6JdELwtanmffd4uRlCGHrHtBoZSBQt7z3U" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>BUUCTF-Misc第一页(签到-ningen) | 坂琴のBlog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/b594f1ef74.js" crossorigin="anonymous"></script>
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+
+
+
+ <div id="loading-container">
+     <p class="loading-text">还在加载 请稍等一下辣ヾ(≧▽≦*)o . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">坂琴のBlog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-archway" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于本站</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aboutme">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于我</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fa-brands fa-bilibili" style="zoom: 0.6;"></i>
+      
+      <span>个人爱好</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/bangumis">
+          
+          <span>番剧</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">坂琴のBlog</div>
+        <div class="logo-desc">
+            
+            记录自己的生活和学习的路程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archway" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于本站</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/aboutme " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于我</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fa-brands fa-bilibili"></i>
+			
+			个人爱好
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/bangumis " style="margin-left:75px">
+				  
+		          <span>番剧</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/buuctfniang.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">BUUCTF-Misc第一页(签到-ningen)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/BUUCTF/">
+                                <span class="chip bg-color">BUUCTF</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                            <a href="/tags/Misc/">
+                                <span class="chip bg-color">Misc</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-01-25
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-02-07
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近又要开始比赛了，所以开始重新刷题，这寒假不是在搞Python就是在搞硬件方面的东西，CTF基本上都快寄了，但是我这种比赛基本上只有主办方才能拿奖，所以无所谓了，刷题嘛，自己学到东西就行。</p>
+<p>BUUCTF:<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges">https://buuoj.cn/challenges</a></p>
+<hr>
+<h2 id="一-签到题"><a href="#一-签到题" class="headerlink" title="一.签到题"></a>一.签到题</h2><p>直接输入给的flag即可得分，flag:<code>flag&#123;buu_ctf&#125;</code></p>
+<hr>
+<h2 id="二-金三胖"><a href="#二-金三胖" class="headerlink" title="二.金三胖"></a>二.金三胖</h2><p>发现是一个gif的图片附件，下载下来，如下gif。</p>
+<p><img src="/images/wordimage/20220125-1/aaa.gif" alt="aaa.gif"></p>
+<p>仔细看会发现，里面穿插的是红色flag值，需要做的是把他提取出来，当然可以截图。这里使用ps逐帧分解，可以看见，如下几个图，然后拼接起来即可。</p>
+<p><img src="/images/wordimage/20220125-1/jinsanpang1.png" alt="第一个flag碎片"></p>
+<p><img src="/images/wordimage/20220125-1/jinsanpang2.png" alt="第二个flag碎片"></p>
+<p><img src="/images/wordimage/20220125-1/jinsanpang3.png" alt="第三个flag碎片"></p>
+<p>flag:<code>flag&#123;he11ohongke&#125;</code></p>
+<hr>
+<h2 id="三-二维码"><a href="#三-二维码" class="headerlink" title="三.二维码"></a>三.二维码</h2><p>下载附件，是一张二维码的图，如下图。</p>
+<p><img src="/images/wordimage/20220125-1/QR_code.png"></p>
+<p>当然可以拿出手机来扫码，但是我去过的比赛，没有那个主办方能使用手机，使用工具，<code>QR_Research</code>，没有网上自行百度下载，扫描结果如下。</p>
+<p><img src="/images/wordimage/20220125-1/secret.png"></p>
+<p>flag:<code>flag&#123;secret is here&#125;</code></p>
+<p>然后发现flag是错误的，使用winhex打开查看，如下图。</p>
+<p><img src="/images/wordimage/20220125-1/winhexQRCODE.png"></p>
+<p>本应该png图标在end地方就结束了但是后面发现了<code>50 4B 03 04</code>是zip压缩包的压缩格式，我们系统切换到Kali Linux把图片托进去使用binwalk工具分离压缩包，语法如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">binwalk -e 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>发现确实有一个zip文件，复制到Windows使用<code>Winhex</code>或者<code>010edit</code>查看是否为伪加密，伪加密可以看这个文章，<a target="_blank" rel="noopener" href="https://blog.takagisan.top/2022/017a75b1bc.html">zip的伪加密</a>👈，发现压缩文件源文件数据区和压缩文件目录区都是<code>09 00</code>那么肯定是真加密了，如下图红色箭头所指向。</p>
+<p><img src="/images/wordimage/20220125-1/relpassword.png"></p>
+<hr>
+<h3 id="1-Windows暴力破解"><a href="#1-Windows暴力破解" class="headerlink" title="1.Windows暴力破解"></a>1.Windows暴力破解</h3><p>如下图，使用了zip破解工具暴力破解出密码是<code>7639</code>，其他工具应该也差不多。</p>
+<p><img src="/images/wordimage/20220125-1/zippojie.png"></p>
+<p>最后使用密码打开即可,flag:<code>flag&#123;vjpw_wnoei&#125;</code></p>
+<hr>
+<h3 id="2-Linux暴力破解"><a href="#2-Linux暴力破解" class="headerlink" title="2.Linux暴力破解"></a>2.Linux暴力破解</h3><p>使用Kali自带的fcrackzip进行弱口令爆破，使用命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fcrackzip -b -c1 -u -l4 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">解释上面参数
+-b	#暴力破解
+-c1	#使用纯数字
+-u  #使用unzip清除错误密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>如下图</p>
+<p><img src="/images/wordimage/20220125-1/linuxzippojie.png"></p>
+<p>密码和上面windows显示一致:<code>7639</code></p>
+<p>最后使用密码打开即可,flag:<code>flag&#123;vjpw_wnoei&#125;</code></p>
+<hr>
+<h2 id="四-你竟然赶我走"><a href="#四-你竟然赶我走" class="headerlink" title="四.你竟然赶我走"></a>四.你竟然赶我走</h2><p>下载附件，发现是一张jpg图片，如下图。</p>
+<p><img src="/images/wordimage/20220125-1/biubiu.jpg"></p>
+<p>看见图片我第一时间想着的就是先用<code>Winhex</code>看看再说，结果flag就在图片底下，如下图。</p>
+<p><img src="/images/wordimage/20220125-1/biubiuflag.png"></p>
+<p>flag:<code>flag&#123;stego_is_s0_bor1ing&#125;</code></p>
+<hr>
+<h2 id="五-N种方法解决"><a href="#五-N种方法解决" class="headerlink" title="五.N种方法解决"></a>五.N种方法解决</h2><p>下载附件下来，发现是一个exe文件，想了一下，还是拉进Winhex文件里面查看一下，发现头是<code>data:image/jpg</code>后面跟着一大串，如下图，这种时候就可以复制到浏览器查看了。</p>
+<p><img src="/images/wordimage/20220125-1/KEYexe.png"></p>
+<p>未完待续……….</p>
+<p>从data的地方开始复制到最后，然后访问，发现是一个二维码，这里说个小插曲，我用QR_Research扫描扫不出来，最后还是拿出手机扫出来的，扫出来的内容是:<code>KEY&#123;dca57f966e4e4e31fd5b15417da63269&#125;</code>按照提示要求修改flag即可。</p>
+<p>flag:<code>flag&#123;dca57f966e4e4e31fd5b15417da63269&#125;</code></p>
+<hr>
+<h2 id="六-大白"><a href="#六-大白" class="headerlink" title="六.大白"></a>六.大白</h2><p>题目现在有提示。</p>
+<blockquote>
+<p>看不到图？ 是不是屏幕太小了 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>提示已经很明确了，应该是修改图片的高度和宽度。</p>
+<p>下载附件是一个png图片，我们右键属性查看宽度和高度，如下图，发现是<code>679 x 256</code>的分辨率。</p>
+<p><img src="/images/wordimage/20220125-1/dabaishuxing.png"></p>
+<p>我们使用Winhex或者其他软件打开，如下图，其中第二行红色箭头所指的<code>00 00 02 A7</code>里面的<code>02A7</code>为宽度，<code>00 00 01 00</code>里面的<code>0100</code>为高度，02A7转换成十进制就是，679，我们把0100也修改成02A7即可看见flag。</p>
+<p><img src="/images/wordimage/20220125-1/dabaixiugai.png"></p>
+<p>修改过后的图片👇</p>
+<p><img src="/images/wordimage/20220125-1/dabaiflag.png"></p>
+<p>flag:<code>flag&#123;He1l0_d4_ba1&#125;</code></p>
+<hr>
+<h2 id="七-基础破解"><a href="#七-基础破解" class="headerlink" title="七.基础破解"></a>七.基础破解</h2><p>提示如下</p>
+<blockquote>
+<p>给你一个压缩包，你并不能获得什么，因为他是四位数字加密的哈哈哈哈哈哈哈。。。不对= =我说了什么了不得的东西。。 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>看样子应该是暴力破解</p>
+<hr>
+<h3 id="1-Windows暴力破解工具"><a href="#1-Windows暴力破解工具" class="headerlink" title="1.Windows暴力破解工具"></a>1.Windows暴力破解工具</h3><p>这里我使用的是ARCHPR，破解工具，如下图，破解成功，密码是<code>2563</code>。</p>
+<p><img src="/images/wordimage/20220125-1/jichupojie.png"></p>
+<p>打开<code>flag.txt</code>发现里面是一堆字符串，看见<code>Zmxh</code>就是<code>BASE64</code>编码，如下图BASE64解密结果。</p>
+<p><img src="/images/wordimage/20220125-1/base64jiemijichupojie.png"></p>
+<p>flag:<code>flag&#123;70354300a5100ba78068805661b93a5c&#125;</code></p>
+<hr>
+<h3 id="2-Kali暴力破解"><a href="#2-Kali暴力破解" class="headerlink" title="2.Kali暴力破解"></a>2.Kali暴力破解</h3><p>需要做一个前置工作，如果Kali里面没有安装rarcrack需要安装，命令如下。</p>
+<p><em><strong>安装rarcrack</strong></em></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> rarcrack <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>安装完毕之后，工具使用命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">rarcrack 文件名 --threads 线程数 --type <span class="token function">rar</span><span class="token operator">|</span><span class="token function">zip</span><span class="token operator">|</span>7z<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>我这里放一张正在破解的图了，如下图👇，因为破解的实在是太慢了，我就算是用100线程也还是慢，Windows用工具一会就跑出来了，总之Kali跑出来之后和Windows操作一样解密即可。</p>
+<p><img src="/images/wordimage/20220125-1/kalipojierar.png"></p>
+<hr>
+<h2 id="八-乌镇峰会种图"><a href="#八-乌镇峰会种图" class="headerlink" title="八.乌镇峰会种图"></a>八.乌镇峰会种图</h2><p>提示如下</p>
+<blockquote>
+<p>乌镇互联网大会召开了，各国巨头汇聚一堂，他们的照片里隐藏着什么信息呢？（答案格式：flag｛答案｝，只需提交答案） 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>下载附件发现是一张jpg图片。</p>
+<p><img src="/images/wordimage/20220125-1/b56cde4f-be03-4d07-a0ca-6af22284f0aa.jpg"></p>
+<p>先用Winhex打开看最前面和最后面，如下图，在最后面看见了flag。</p>
+<p><img src="/images/wordimage/20220125-1/wuzhenfeng.png"></p>
+<p>flag:<code>flag&#123;97314e7864a8f62627b26f3f998c37f1&#125;</code></p>
+<hr>
+<h2 id="九-文件中的秘密"><a href="#九-文件中的秘密" class="headerlink" title="九.文件中的秘密"></a>九.文件中的秘密</h2><p>提示如下</p>
+<blockquote>
+<p>小明经常喜欢在文件中藏一些秘密。时间久了便忘记了，你能帮小明找到该文件中的秘密吗？ 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>下载附件发现是一张路飞的jpeg图片</p>
+<p><img src="/images/wordimage/20220125-1/luffpass.jpeg"></p>
+<p>使用Winhex打开看看，看最下面，啥东西都没有，但是在中间有一堆的空数据，仔细看看空数据，在中间发现了flag。</p>
+<p><img src="/images/wordimage/20220125-1/luffwinhex.png"></p>
+<p>flag:<code>flag&#123;870c5a72806115cb5439345d8b014396&#125;</code></p>
+<hr>
+<h2 id="十-LSB"><a href="#十-LSB" class="headerlink" title="十.LSB"></a>十.LSB</h2><p>这题没提示，但是题目其实就是提示<code>LSB</code>，百度百科说的是<code>最低有效位</code>，解释如下。</p>
+<pre class="line-numbers language-none"><code class="language-none">最低有效位（ least significant bit，LSB）指的是一个二进制数字中的第0位（即最低位）。最低有效位和最高有效位是相对应的概念。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>下载题目附件，发现是一张png图片，如下</p>
+<p><img src="/images/wordimage/20220126/flag11.png"></p>
+<p>处理LSB的软件是<code>Stegsolve</code>，经过分析发现在<code>Red plane 0</code>，<code>Green plane 0</code>，<code>Blue plane 0</code>的地方顶部存在一个黑色条条，这样看是在这三个地方隐藏了信息，如下图。</p>
+<p><img src="/images/wordimage/20220126/flag11red.png"></p>
+<p><img src="/images/wordimage/20220126/flag11green.png"></p>
+<p><img src="/images/wordimage/20220126/flag11blue.png"></p>
+<p>在软件顶部，选择<code>Analyse</code> &gt; <code>Data Extract</code>，右边选择LSB First，然后左边在Red，Blue，Green的地方选择0，然后点击Preview，在顶部发现了PNG图片头应该是隐藏了一张PNG图片，如下图。</p>
+<p><img src="/images/wordimage/20220126/flag11png.png"></p>
+<p>我们点击Save Bin，保存为png图片，发现是一张二维码图片，如下图，使用QR扫一下即可出现flag。</p>
+<p><img src="/images/wordimage/20220126/aflag.png"></p>
+<p>flag:cumtctf{1sb_i4_s0_Ea4y}，修改过后,<code>flag&#123;1sb_i4_s0_Ea4y&#125;</code></p>
+<hr>
+<h2 id="十一-wireshark"><a href="#十一-wireshark" class="headerlink" title="十一.wireshark"></a>十一.wireshark</h2><p>提示如下</p>
+<blockquote>
+<p>黑客通过wireshark抓到管理员登陆网站的一段流量包（管理员的密码即是答案) 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>看来是分析流量包，下载附件流量包用Wirshark打开。</p>
+<p>思路是这样的，既然提示是登录网站的一段流量包，提交的时候肯定是POST方法提交的，我们只需要找出POST方法提交的流量包即可，在上面应用过滤器输入代码如下。</p>
+<pre class="line-numbers language-none"><code class="language-none">http.request.method&#x3D;&#x3D;POST<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>发现只有这一个是POST方法提交，如下图，双击点进去之后发现，一个password，应该是就是flag了。</p>
+<p><img src="/images/wordimage/20220126/wirsharkflag.png"></p>
+<p>flag:<code>flag&#123;ffb7567a1d4f4abdffdb54e022f8facd&#125;</code></p>
+<hr>
+<h2 id="十二-rar"><a href="#十二-rar" class="headerlink" title="十二.rar"></a>十二.rar</h2><p>提示如下</p>
+<blockquote>
+<p>这个是一个rar文件，里面好像隐藏着什么秘密，但是压缩包被加密了，毫无保留的告诉你，rar的密码是4位纯数字。 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>看样子应该又是暴力破解了，这里还是会写Windows的破解过程和Kali的破解过程。</p>
+<hr>
+<h3 id="1-Windows暴力破解-1"><a href="#1-Windows暴力破解-1" class="headerlink" title="1.Windows暴力破解"></a>1.Windows暴力破解</h3><p>用的软件是ARCHPR，没有可以百度下载，如下图破解成功，密码是8795。</p>
+<p><img src="/images/wordimage/20220126/windowspojie.png"></p>
+<p>打开压缩包里面的txt文件即可获得flag。</p>
+<p>flag:<code>flag&#123;1773c5da790bd3caff38e3decd180eb7&#125;</code></p>
+<hr>
+<h3 id="2-Kali暴力破解-1"><a href="#2-Kali暴力破解-1" class="headerlink" title="2.Kali暴力破解"></a>2.Kali暴力破解</h3><p>破解过程和第七题的基础破解一样，可以参考第七题的Kali暴力破解</p>
+<hr>
+<h2 id="十三-zip伪加密"><a href="#十三-zip伪加密" class="headerlink" title="十三.zip伪加密"></a>十三.zip伪加密</h2><p>下载附件发现是一个zip压缩包，题目就是提示，伪加密可以看这篇文章，👉<a target="_blank" rel="noopener" href="https://blog.takagisan.top/2022/017a75b1bc.html">zip伪加密</a>，如下图操作，红色箭头把09修改为00即可，或者其他偶数。</p>
+<p><img src="/images/wordimage/20220126/weijiami.png"></p>
+<p>flag:<code>flag&#123;Adm1N-B2G-kU-SZIP&#125;</code></p>
+<hr>
+<h2 id="十四-qr"><a href="#十四-qr" class="headerlink" title="十四.qr"></a>十四.qr</h2><p>提示如下</p>
+<blockquote>
+<p>这是一个二维码，谁用谁知道！ 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>下载附件发现是一张png二维码图片，如下图，思路当然就是扫一下。</p>
+<p><img src="/images/wordimage/20220126/1abe854d-4770-4214-829b-bf6ff513fa14.png"></p>
+<p>结果扫一下还真出来了，如下图。</p>
+<p><img src="/images/wordimage/20220126/qrflag.png"></p>
+<p>flag:<code>Flag&#123;878865ce73370a4ce607d21ca01b5e59&#125;</code>修改一下<code>flag&#123;878865ce73370a4ce607d21ca01b5e59&#125;</code></p>
+<hr>
+<h2 id="十五-被嗅探的流量"><a href="#十五-被嗅探的流量" class="headerlink" title="十五.被嗅探的流量"></a>十五.被嗅探的流量</h2><p>提示如下</p>
+<blockquote>
+<p>某黑客潜入到某公司内网通过嗅探抓取了一段文件传输的数据，该数据也被该公司截获，你能帮该公司分析他抓取的到底是什么文件的数据吗？ 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>下载附件是一个流量包，提示说的是文件传输的数据，这里有两种解法，但是也不算是。</p>
+<p>首先和十一题的Wireshark一样，看看POST传输，输入如下代码。</p>
+<pre class="line-numbers language-none"><code class="language-none">http.request.method&#x3D;&#x3D;POST<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>发现有两个POST提交的数据包，发现其中一个是jpg图片，如下图</p>
+<p><img src="/images/wordimage/20220126/wirshark.png"></p>
+<p>然后右键，追踪流 &gt; HTTP流，发现上传的图片叫做flag.jpg，我们拉到最后看看这个图片是啥，发现是flag！如下图。</p>
+<p><img src="/images/wordimage/20220126/wirsharkflag1.png"></p>
+<p>flag:<code>flag&#123;da73d88936010da1eeeb36e945ec4b97&#125;</code></p>
+<p>这里说下其他方法，也可以直接打开流量包之后ctrl + f搜索，选择分组字节流，然后选择宽窄，flag就直接出来了,如下图。</p>
+<p><img src="/images/wordimage/20220126/wirsharkflag2.png"></p>
+<p>还有一种就是把图片导入出来，去Winhex里面去查看，在上面输入<code>http.request.method==POST</code>之后出现的第二个POST包，找到如下图箭头所指向。</p>
+<p><img src="/images/wordimage/20220126/wisharkflag3.png"></p>
+<p>之后右键箭头所指<code>导出分组字节流</code>，选择全部文件保存为jpg格式图片，然后在放进Winhex查看最下面就是flag。</p>
+<hr>
+<h2 id="十六-镜子里面的世界"><a href="#十六-镜子里面的世界" class="headerlink" title="十六.镜子里面的世界"></a>十六.镜子里面的世界</h2><p>没有提示</p>
+<p>下载附件，发现是一张PNG图片，如下图。</p>
+<p><img src="/images/wordimage/20220126/steg.png"></p>
+<p>首先查看图片二进制，发现没啥可发现的，然后用Stegsolve查看，发现也没啥可以发现的，然后查看各个通道的0通道的值，就发现了flag，如下图。</p>
+<p><img src="/images/wordimage/20220126/steg1.png"></p>
+<p>flag:<code>flag&#123;st3g0_saurus_wr3cks&#125;</code></p>
+<hr>
+<h2 id="十七-ningen"><a href="#十七-ningen" class="headerlink" title="十七.ningen"></a>十七.ningen</h2><p>提示如下</p>
+<blockquote>
+<p>人类的科学日益发展，对自然的研究依然无法满足，传闻日本科学家秋明重组了基因序列，造出了名为ningen的超自然生物。某天特工小明偶然截获了日本与俄罗斯的秘密通信，文件就是一张ningen的特写，小明通过社工，知道了秋明特别讨厌中国的六位银行密码，喜欢四位数。你能找出黑暗科学家秋明的秘密么？ 注意：得到的 flag 请包上 flag{} 提交</p>
+</blockquote>
+<p>提示是四位数，但是下载附件是一张jpg图片，如下图。</p>
+<p><img src="/images/wordimage/20220126/jp.jpg"></p>
+<p>用Winhex查看没啥东西，然后用Stegsolve查看，各个通道也查看了，也没啥东西，去Kali里面分离一下文件，是不是有东西在里面用的是<code>binwalk</code>工具，命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">binwalk -e 文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>发现确实有东西，如下图，是一个zip文件，需要密码，根据提示是四位数密码，参考第七题基础破解破解密码即可，里面就是flag，Kali我建议使用fcrackzip。</p>
+<p><img src="/images/wordimage/20220126/binwalk.png"></p>
+<p>flag:<code>flag&#123;b025fc9ca797a67d2103bfbc407a6d5f&#125;</code></p>
+<hr>
+<p>这里就是前十七题的解题思路，第一页后面十五题👉<a target="_blank" rel="noopener" href="https://blog.takagisan.top/2022/014cfb2d5a.html">后面十五题</a>。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">坂琴</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.takagisan.top/2022/0157b85665.html">https://www.takagisan.top/2022/0157b85665.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">坂琴</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/BUUCTF/">
+                                    <span class="chip bg-color">BUUCTF</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                                <a href="/tags/Misc/">
+                                    <span class="chip bg-color">Misc</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '2CRS1n25zIYnK5HeDRr1ExBy-gzGzoHsz',
+        appKey: 'aIkJLkdDDj3qV85F5tSx4CnB',
+        notify: 'true' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '☆*: .｡. o(≧▽≦)o .｡.:*☆/请输入你的邮箱，昵称和网址吧！'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/017a75b1bc.html">
+                    <div class="card-image">
+                        
+                        <img src="/images/monu.jpg" class="responsive-img" alt="zip压缩包的伪加密">
+                        
+                        <span class="card-title">zip压缩包的伪加密</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            最简单理解zip伪加密
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                    <a href="/tags/zip%E5%8E%8B%E7%BC%A9%E5%8C%85/">
+                        <span class="chip bg-color">zip压缩包</span>
+                    </a>
+                    
+                    <a href="/tags/%E4%BC%AA%E5%8A%A0%E5%AF%86/">
+                        <span class="chip bg-color">伪加密</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%A2%8E%E7%9F%A5%E8%AF%86/">
+                        <span class="chip bg-color">碎知识</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/01d4706cc6.html">
+                    <div class="card-image">
+                        
+                        <img src="/images/Markdowndown.jpg" class="responsive-img" alt="Markdown扩展语法(下)">
+                        
+                        <span class="card-title">Markdown扩展语法(下)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            紧接上篇文章Markdown基础语法
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Markdown/" class="post-category">
+                                    Markdown
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Typora/">
+                        <span class="chip bg-color">Typora</span>
+                    </a>
+                    
+                    <a href="/tags/Markdown/">
+                        <span class="chip bg-color">Markdown</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7413239070"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.5'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2025</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">坂琴</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">81.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+			
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2022";
+                        var startMonth = "1";
+                        var startDate = "20";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+                <span id="icp"><img src="/medias/icp.png"
+                                    style="vertical-align: text-bottom;"/>
+                <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=50011802010852" target="_blank">渝公网安备 50011802010852号</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
+				<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">渝ICP备2023009623号</a>
+            </span>
+		 
+			
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/SukiTakagisan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2125760270@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="https://twitter.com/Takagis97136578" class="tooltipped" target="_blank" data-tooltip="博主的推特: https://twitter.com/Takagis97136578" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2125760270" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2125760270" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/yu-qi-cai-hong-mao" class="tooltipped" target="_blank" data-tooltip="博主的知乎: https://www.zhihu.com/people/yu-qi-cai-hong-mao" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+<!-- 
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+ -->
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+		 	
+		 
+
+
+
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+    
+    <!-- 爆炸效果 -->
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <!-- 樱花飘落 -->
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+        }
+    </script>
+
+    <!--崩溃欺骗-->
+    <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+</body>
+
+</html>

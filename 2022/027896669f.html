@@ -1,0 +1,2910 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="CTF常见密码学">
+    <meta name="description" content="记录自己的生活和学习的路程">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="baidu-site-verification" content="code-ZlodHEgStx" />
+    <meta name="google-site-verification" content="eTFvpWCZs6JdELwtanmffd4uRlCGHrHtBoZSBQt7z3U" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>CTF中常见密码学(一) | 坂琴のBlog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/b594f1ef74.js" crossorigin="anonymous"></script>
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+
+
+
+ <div id="loading-container">
+     <p class="loading-text">还在加载 请稍等一下辣ヾ(≧▽≦*)o . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">坂琴のBlog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-archway" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于本站</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aboutme">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于我</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fa-brands fa-bilibili" style="zoom: 0.6;"></i>
+      
+      <span>个人爱好</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/bangumis">
+          
+          <span>番剧</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">坂琴のBlog</div>
+        <div class="logo-desc">
+            
+            记录自己的生活和学习的路程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archway" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于本站</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/aboutme " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于我</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fa-brands fa-bilibili"></i>
+			
+			个人爱好
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/bangumis " style="margin-left:75px">
+				  
+		          <span>番剧</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/twopeople.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">CTF中常见密码学(一)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">
+                                <span class="chip bg-color">密码学</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-02-01
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-03-03
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>参考，我们任课老师的WORD和PPT，结合自己的理解，在结合网上文章的理解。</p>
+<h2 id="一-BASE64编码"><a href="#一-BASE64编码" class="headerlink" title="一.BASE64编码"></a>一.BASE64编码</h2><p>BASE64编码中，特征和所拥有的字符<code>字母:A-Z a-z;数字:0-9;符号:+ / </code>，然后末尾经常有一个“=”或者两个“==”。</p>
+<p>原理，先把需要加密的字符串每个字符转换成ASCII码，然后ASCII码转换成二进制为8位二进制数字表示，然后在以六位二进制为一组转十进制，最后查找对应的BASE64对照表即可。</p>
+<p>ASCII表，常用的无非就是大写字母和小写字母，大写字母的<code>A</code>开始是<code>97</code>，小写字母的<code>a</code>开始是<code>65</code>，推算下即可。</p>
+<p>比如，这里需要加密“Ken”这个字符串，里面有大写和小写，查找ASCII码表，分别对应的是<code>75 101 110</code>，转换成二进制<code>75:01001011; 101:01100101; 110:01101110;</code>，先并排在一起，就是<strong>010010110110010101101110</strong>，然后在以六个为一组排序👉<strong>010010 | 110110 | 010101 | 101110</strong>，将这六个二进制重新转换成十进制，分别对应的是，<code>18 54 21 46</code>，然后对应base64码表，找出对应的上面重新转换成的十进制数字即可，分别是👉<strong>S2Vu</strong>，所以Ken这个字符串BASE64加密编码之后是<code>S2Vu</code>，如果不太清楚，看如下表格。</p>
+<table>
+<thead>
+<tr>
+<th align="center">文本</th>
+<th align="center">K</th>
+<th align="center">e</th>
+<th align="center">n</th>
+<th>NULL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ASCII编码</td>
+<td align="center">75</td>
+<td align="center">101</td>
+<td align="center">110</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td align="center">二进制位</td>
+<td align="center">01001011</td>
+<td align="center">01100101</td>
+<td align="center">01101110</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td align="center">分组</td>
+<td align="center">010010</td>
+<td align="center">110110</td>
+<td align="center">010101</td>
+<td>101110</td>
+</tr>
+<tr>
+<td align="center">转换后的十进制&amp;BASE64码表索引</td>
+<td align="center">18</td>
+<td align="center">54</td>
+<td align="center">21</td>
+<td>46</td>
+</tr>
+<tr>
+<td align="center">结果&amp;Base64码表</td>
+<td align="center">S</td>
+<td align="center">2</td>
+<td align="center">V</td>
+<td>u</td>
+</tr>
+</tbody></table>
+<p>这样应该就差不多了，附上BASE64索引表，如下</p>
+<table>
+<thead>
+<tr>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">A</td>
+<td></td>
+<td align="center">16</td>
+<td align="center">Q</td>
+<td></td>
+<td align="center">32</td>
+<td align="center">g</td>
+<td></td>
+<td align="center">48</td>
+<td align="center">w</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">B</td>
+<td></td>
+<td align="center">17</td>
+<td align="center">R</td>
+<td></td>
+<td align="center">33</td>
+<td align="center">h</td>
+<td></td>
+<td align="center">49</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">C</td>
+<td></td>
+<td align="center">18</td>
+<td align="center">S</td>
+<td></td>
+<td align="center">34</td>
+<td align="center">i</td>
+<td></td>
+<td align="center">50</td>
+<td align="center">y</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">D</td>
+<td></td>
+<td align="center">19</td>
+<td align="center">T</td>
+<td></td>
+<td align="center">35</td>
+<td align="center">j</td>
+<td></td>
+<td align="center">51</td>
+<td align="center">z</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">E</td>
+<td></td>
+<td align="center">20</td>
+<td align="center">U</td>
+<td></td>
+<td align="center">36</td>
+<td align="center">k</td>
+<td></td>
+<td align="center">52</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">F</td>
+<td></td>
+<td align="center">21</td>
+<td align="center">V</td>
+<td></td>
+<td align="center">37</td>
+<td align="center">l</td>
+<td></td>
+<td align="center">53</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">G</td>
+<td></td>
+<td align="center">22</td>
+<td align="center">W</td>
+<td></td>
+<td align="center">38</td>
+<td align="center">m</td>
+<td></td>
+<td align="center">54</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">H</td>
+<td></td>
+<td align="center">23</td>
+<td align="center">X</td>
+<td></td>
+<td align="center">39</td>
+<td align="center">n</td>
+<td></td>
+<td align="center">55</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">I</td>
+<td></td>
+<td align="center">24</td>
+<td align="center">Y</td>
+<td></td>
+<td align="center">40</td>
+<td align="center">o</td>
+<td></td>
+<td align="center">56</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">J</td>
+<td></td>
+<td align="center">25</td>
+<td align="center">Z</td>
+<td></td>
+<td align="center">41</td>
+<td align="center">p</td>
+<td></td>
+<td align="center">57</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">K</td>
+<td></td>
+<td align="center">26</td>
+<td align="center">a</td>
+<td></td>
+<td align="center">42</td>
+<td align="center">q</td>
+<td></td>
+<td align="center">58</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">L</td>
+<td></td>
+<td align="center">27</td>
+<td align="center">b</td>
+<td></td>
+<td align="center">43</td>
+<td align="center">r</td>
+<td></td>
+<td align="center">59</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">M</td>
+<td></td>
+<td align="center">28</td>
+<td align="center">c</td>
+<td></td>
+<td align="center">44</td>
+<td align="center">s</td>
+<td></td>
+<td align="center">60</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">N</td>
+<td></td>
+<td align="center">29</td>
+<td align="center">d</td>
+<td></td>
+<td align="center">45</td>
+<td align="center">t</td>
+<td></td>
+<td align="center">61</td>
+<td align="center">9</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="center">O</td>
+<td></td>
+<td align="center">30</td>
+<td align="center">e</td>
+<td></td>
+<td align="center">46</td>
+<td align="center">u</td>
+<td></td>
+<td align="center">62</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="center">P</td>
+<td></td>
+<td align="center">37</td>
+<td align="center">f</td>
+<td></td>
+<td align="center">47</td>
+<td align="center">v</td>
+<td></td>
+<td align="center">63</td>
+<td align="center">/</td>
+</tr>
+</tbody></table>
+<p>在附上一张ASCII码表图，如下图，图来自于网络。</p>
+<p><img src="/images/wordimage/20220201/ASCII.jpg"></p>
+<h3 id="1-有等号”-”的情况"><a href="#1-有等号”-”的情况" class="headerlink" title="1.有等号”=”的情况"></a>1.有等号”=”的情况</h3><p>比如<code>a</code>这个字母，ASCII码是<code>65</code>，转换成二进制是<strong>01000001</strong>，转换成六个一组<strong>010000 | 01</strong>，就会发现后面不足以组成六位数，就可以在后面添零，就变成了👉<strong>010000 | 010000</strong>，转换成十进制就是<code>16</code>，然后根据BASE64码表对应的是<code>Q</code>，那么a的加密后就是<code>QQ</code>，但是我自己的理解是，加密后的长度也就是编码后的长度必须能整除<code>4</code>，才可以，这里QQ不能整除<code>4</code>所以不行，就可以加上<code>=</code>，长度就可以了，所以最终的编码就是<code>QQ==</code>。</p>
+<p>另外一种理解，如果要进行编码的字符串，不能被3整除，<code>后面会多出一个字节或者两个字节</code>，就可以使用“==”来代替，比如编码<code>a</code>，不能被三整除，还差两位就可以被三整除，就可以在最终编码结果加上两个”==”，结合如下图理解更好。</p>
+<p><img src="/images/wordimage/20220201/base64.png"></p>
+<hr>
+<h2 id="二-base32加密"><a href="#二-base32加密" class="headerlink" title="二.base32加密"></a>二.base32加密</h2><p>和base64加密差不多，这里直接举例子，先看下表是base32的索引表，比如这里我要BASE32编码,<code>Ken</code>，对应的ASCII码分别是，<code>75 101 110</code>，转换成二进制分别对应的是<code>75:01001011; 101:01100101; 110:01101110</code>，然后合在一起，是<strong>0100101101100101011011100</strong>，然后在以五个一组排序👉<strong>01001 | 01101 | 10010 | 10110 | 11100</strong>，然后在转换成十进制就是，<code>9 13 18 22 28</code>，根据下面的索引表，就是，<code>JNSW4</code>，这里只有五个数，必须要四个四个一组，不足四个就用<code>=</code>，来填充，所以就是<code>JNSW4===</code>。</p>
+<table>
+<thead>
+<tr>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">A</td>
+<td></td>
+<td align="center">9</td>
+<td align="center">J</td>
+<td></td>
+<td align="center">18</td>
+<td align="center">S</td>
+<td></td>
+<td align="center">27</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">B</td>
+<td></td>
+<td align="center">10</td>
+<td align="center">K</td>
+<td></td>
+<td align="center">19</td>
+<td align="center">T</td>
+<td></td>
+<td align="center">28</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">C</td>
+<td></td>
+<td align="center">11</td>
+<td align="center">L</td>
+<td></td>
+<td align="center">20</td>
+<td align="center">U</td>
+<td></td>
+<td align="center">29</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">D</td>
+<td></td>
+<td align="center">12</td>
+<td align="center">M</td>
+<td></td>
+<td align="center">21</td>
+<td align="center">V</td>
+<td></td>
+<td align="center">30</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">E</td>
+<td></td>
+<td align="center">13</td>
+<td align="center">N</td>
+<td></td>
+<td align="center">22</td>
+<td align="center">W</td>
+<td></td>
+<td align="center">31</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">F</td>
+<td></td>
+<td align="center">14</td>
+<td align="center">O</td>
+<td></td>
+<td align="center">23</td>
+<td align="center">X</td>
+<td></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">G</td>
+<td></td>
+<td align="center">15</td>
+<td align="center">P</td>
+<td></td>
+<td align="center">24</td>
+<td align="center">Y</td>
+<td></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">H</td>
+<td></td>
+<td align="center">16</td>
+<td align="center">Q</td>
+<td></td>
+<td align="center">25</td>
+<td align="center">Z</td>
+<td></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">I</td>
+<td></td>
+<td align="center">17</td>
+<td align="center">R</td>
+<td></td>
+<td align="center">26</td>
+<td align="center">2</td>
+<td></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>可以看如下表格</p>
+<table>
+<thead>
+<tr>
+<th align="center">文本</th>
+<th align="center">K</th>
+<th align="center">e</th>
+<th align="center">n</th>
+<th align="center">NULL</th>
+<th align="center">NULL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ASCII编码</td>
+<td align="center">75</td>
+<td align="center">101</td>
+<td align="center">110</td>
+<td align="center">NULL</td>
+<td align="center">NULL</td>
+</tr>
+<tr>
+<td align="center">二进制位</td>
+<td align="center">01001011</td>
+<td align="center">01100101</td>
+<td align="center">01101110</td>
+<td align="center">NULL</td>
+<td align="center">NULL</td>
+</tr>
+<tr>
+<td align="center">分组</td>
+<td align="center">01001</td>
+<td align="center">01101</td>
+<td align="center">10010</td>
+<td align="center">10110</td>
+<td align="center">11100</td>
+</tr>
+<tr>
+<td align="center">分组后的十进制</td>
+<td align="center">9</td>
+<td align="center">13</td>
+<td align="center">18</td>
+<td align="center">22</td>
+<td align="center">28</td>
+</tr>
+<tr>
+<td align="center">索引值</td>
+<td align="center">J</td>
+<td align="center">N</td>
+<td align="center">S</td>
+<td align="center">W</td>
+<td align="center">4</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三-base16加密"><a href="#三-base16加密" class="headerlink" title="三.base16加密"></a>三.base16加密</h2><p>如果理解了，base64加密和base32加密方式，那么base16加密方式就很好理解了，先看如下base16索引表。</p>
+<table>
+<thead>
+<tr>
+<th align="center">数值</th>
+<th align="center">字符</th>
+<th></th>
+<th align="center">数值</th>
+<th align="center">字符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td></td>
+<td align="center">8</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td></td>
+<td align="center">9</td>
+<td align="center">9</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">2</td>
+<td></td>
+<td align="center">10</td>
+<td align="center">A</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">3</td>
+<td></td>
+<td align="center">11</td>
+<td align="center">B</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">4</td>
+<td></td>
+<td align="center">12</td>
+<td align="center">C</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">5</td>
+<td></td>
+<td align="center">13</td>
+<td align="center">D</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">6</td>
+<td></td>
+<td align="center">14</td>
+<td align="center">E</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">7</td>
+<td></td>
+<td align="center">15</td>
+<td align="center">F</td>
+</tr>
+</tbody></table>
+<p>先还是和base64和base32一样将需要加密的字符串转换成ASCII码然后转换成二进制，区别就是分组排序的时候是以4个为一组来排序，base64是六个为一组，base32是以五个为一组，如下图理解即可，图来自CSDN。</p>
+<p><img src="/images/wordimage/20220201/base16.png"></p>
+<hr>
+<h2 id="四-Unicode编码"><a href="#四-Unicode编码" class="headerlink" title="四.Unicode编码"></a>四.Unicode编码</h2><p>特征是以<code>\u数字或者字母加数字</code>，比如，\u6211，转换中文就是“我”，<code>\u</code>过后是每四个为一组，最简单解码方式可以使用python的print函数输出即可，编码👉<strong>\u0048\u0065\u006c\u006c\u006f\u0020\u0057\u006f\u0072\u006c\u0064</strong>，解码效果如下图👇，成功解码出字符串<code>Hello World</code></p>
+<p><img src="/images/wordimage/20220201/unicode.png"></p>
+<p>上面是解密，加密如下。</p>
+<p>编码原理，先将需要加密的字符转换成ASCII编码，然后把ASCII编码转换成十六进制即可，不足四位前面添0即可，比如<code>a</code>这个字符，编码之后是0x61，就需要加零就是0x0061，如下是python实现，非常简单。</p>
+<p>最重要的就是ord函数和hex函数，ord函数把字符转ASCII，然后hex把数字转十六进制。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">str</span><span class="token operator">=</span><span class="token string">'flag'</span>
+<span class="token builtin">dict</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+    result <span class="token operator">=</span> <span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">r'0x'</span><span class="token punctuation">,</span><span class="token string">r'\u'</span><span class="token punctuation">)</span>
+    <span class="token builtin">dict</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token builtin">dict</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h2 id="五-URL编码"><a href="#五-URL编码" class="headerlink" title="五.URL编码"></a>五.URL编码</h2><p>在浏览器地址栏经常能看见，特征是<code>%数字加字母</code>，比如👉<strong>%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C</strong>，这种类型的，解码之后的原文是，<strong>你好世界</strong>，还是需要用到python,当然也可以在线编码解码，需要用到的是python的<code>urllib</code>模块下面的<code>parse</code>模块，如下代码。</p>
+<p>quote是编码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse <span class="token keyword">as</span> url
+<span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">'你好世界'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>url<span class="token punctuation">.</span>quote<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>输入效果如下</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如何解码，如下python代码。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse <span class="token keyword">as</span> url
+<span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">'%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>url<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>解码效果为<code>你好世界</code></p>
+<hr>
+<h2 id="六-进制转换"><a href="#六-进制转换" class="headerlink" title="六.进制转换"></a>六.进制转换</h2><h3 id="1-python实现进制转换"><a href="#1-python实现进制转换" class="headerlink" title="1.python实现进制转换"></a>1.python实现进制转换</h3><hr>
+<h4 id="1-十进制转二进制"><a href="#1-十进制转二进制" class="headerlink" title="1.十进制转二进制"></a>1.十进制转二进制</h4><p>可以用到一个函数bin函数，可以之间转换，如下代码。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">bin</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>输出结果是<code>0b1010</code></p>
+<hr>
+<h4 id="2-二进制转十进制"><a href="#2-二进制转十进制" class="headerlink" title="2.二进制转十进制"></a>2.二进制转十进制</h4><p>可以用到一个int函数，如下代码，int函数里面的2代表的是进制。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">'1010'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>输出的数字是<code>10</code>。</p>
+<hr>
+<h4 id="3-十进制转八进制"><a href="#3-十进制转八进制" class="headerlink" title="3.十进制转八进制"></a>3.十进制转八进制</h4><p>需要用到一个oct函数，如下代码。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">oct</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>输入结果是<code>0o144</code></p>
+<hr>
+<h4 id="4-八进制转十进制"><a href="#4-八进制转十进制" class="headerlink" title="4.八进制转十进制"></a>4.八进制转十进制</h4><p>和上面二进制转十进制差不多，如下代码，只需要更改数字即可</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">str</span> <span class="token operator">=</span> <span class="token string">'144'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<hr>
+<h4 id="5-十进制转十六进制"><a href="#5-十进制转十六进制" class="headerlink" title="5.十进制转十六进制"></a>5.十进制转十六进制</h4><p>需要用到一个hex函数，如下代码。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">hex</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>输出结果是<code>0xff</code>，十六进制转换十进制和上面差不多，只需要更改数字即可。</p>
+<hr>
+<h3 id="2-手算进制"><a href="#2-手算进制" class="headerlink" title="2.手算进制"></a>2.手算进制</h3><p>可以直接参考百度百科👉<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/3117222">进制转换</a>。</p>
+<hr>
+<h2 id="七-置换密码"><a href="#七-置换密码" class="headerlink" title="七.置换密码"></a>七.置换密码</h2><h3 id="1-加密"><a href="#1-加密" class="headerlink" title="1.加密"></a>1.加密</h3><p>1.明文:<code>State Key Laboratory of Networking and Switching</code></p>
+<p>2.加密密钥:<code>key=(1,5,6,2,3)</code></p>
+<p>3.将明文分组，按照六个字母一组来分，总共可以分为七组，不足六个字母的可以用双方事先规定好的字符来填充比如空格，如下是分组过后的样子👇。</p>
+<p><strong>P = (StateK)(eyLabo)(ratory)(ofNetw)(orking)(andSwi)(tching)</strong></p>
+<p>4.对每组字符进行加密，根据加密密钥key，把每组的第1位字符放在第5位字符上面，第5位字符放在第6位字符上面，第6位字符放在第2位字符上面，第2位字符放在第3位字符上面，第3位字符放在第1位字符上面，这样排序即可，如下👇。</p>
+<p><strong>P = (aKttSe)(Loyaeb)(tyaorr)(Nwfeot)(kgrion)(dinSaw)(hgcitn)</strong></p>
+<p>最终密文就是<code>aKttSeLoyaebtyaorrNwfeotkgriondinSawhgcitn</code></p>
+<hr>
+<h3 id="2-解密"><a href="#2-解密" class="headerlink" title="2.解密"></a>2.解密</h3><p>解密需要的是把密钥给反向过来，原本的密钥是<code>(1,5,6,2,3)</code>需要逆置换变成<code>(1,3,2,6,5)</code>，然后在按照加密的方法即可解密。</p>
+<hr>
+<h2 id="八-栅栏密码"><a href="#八-栅栏密码" class="headerlink" title="八.栅栏密码"></a>八.栅栏密码</h2><p>栅栏密码潜规则，字符不会超过30个。</p>
+<hr>
+<h3 id="1-加密-1"><a href="#1-加密-1" class="headerlink" title="1.加密"></a>1.加密</h3><p>假设明文是:<code>THEREISACIPHER</code>，然后根据上下上下排序，就是</p>
+<p>T E E S C P E<br>H R I A   I H  R</p>
+<p>最后连在一起就是TEESCPEHRIAIHR。</p>
+<p>加密的另外一种方法，明文是<code>THEREISACIPHER</code>，先两个两个分一组，就是，<code>TH ER EI SA CI PH ER</code>。</p>
+<p>先取出第一个字母：TEESCPE<br>在取出第二个字母：HRIAIHR</p>
+<p>最后连在一起即可。</p>
+<hr>
+<h3 id="2-解密-1"><a href="#2-解密-1" class="headerlink" title="2.解密"></a>2.解密</h3><p>加密密文：<code>TEESCPEHRIAIHR</code></p>
+<p>解密只需要将密文从中间分开，变位两行。</p>
+<p><code>T E E S C P E</code><br><code>H R I A I H R</code></p>
+<p>最后在上下上下组合起来即可。</p>
+<p><code>THEREISACIPHER</code></p>
+<hr>
+<h2 id="九-单表代换密码"><a href="#九-单表代换密码" class="headerlink" title="九.单表代换密码"></a>九.单表代换密码</h2><p>假设明文是:<code>helloWorld</code></p>
+<p>假设密钥是:<code>KENSSB</code>，去掉重复的字母就是<code>KENSB</code>，然后按照字母顺序排列剩余的字母即可得到一个方阵表，如下表。</p>
+<table>
+<thead>
+<tr>
+<th align="center">K</th>
+<th align="center">E</th>
+<th align="center">N</th>
+<th align="center">S</th>
+<th align="center">B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">C</td>
+<td align="center">D</td>
+<td align="center">F</td>
+<td align="center">G</td>
+</tr>
+<tr>
+<td align="center">H</td>
+<td align="center">I</td>
+<td align="center">J</td>
+<td align="center">L</td>
+<td align="center">M</td>
+</tr>
+<tr>
+<td align="center">O</td>
+<td align="center">P</td>
+<td align="center">Q</td>
+<td align="center">R</td>
+<td align="center">T</td>
+</tr>
+<tr>
+<td align="center">U</td>
+<td align="center">V</td>
+<td align="center">W</td>
+<td align="center">X</td>
+<td align="center">Y</td>
+</tr>
+<tr>
+<td align="center">Z</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>然后在从左边下边开始一直到右边排序，即可得到代换密文，代换密码表如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>明文字母</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+<th>J</th>
+<th>K</th>
+<th>L</th>
+<th>M</th>
+<th>N</th>
+<th>O</th>
+<th>P</th>
+<th>Q</th>
+<th>R</th>
+<th>S</th>
+<th>T</th>
+<th>U</th>
+<th>V</th>
+<th>W</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>密文字母</td>
+<td>K</td>
+<td>A</td>
+<td>H</td>
+<td>O</td>
+<td>U</td>
+<td>Z</td>
+<td>E</td>
+<td>C</td>
+<td>I</td>
+<td>P</td>
+<td>V</td>
+<td>N</td>
+<td>D</td>
+<td>J</td>
+<td>Q</td>
+<td>W</td>
+<td>S</td>
+<td>F</td>
+<td>L</td>
+<td>R</td>
+<td>X</td>
+<td>B</td>
+<td>G</td>
+<td>M</td>
+<td>T</td>
+<td>Y</td>
+</tr>
+</tbody></table>
+<p>然后按照，明文字母所对应的密文字母，找到排序即可，<code>helloword</code>加密之后的密文是<code>CUNNQGQFNO</code></p>
+<hr>
+<h2 id="十-埃特巴什码"><a href="#十-埃特巴什码" class="headerlink" title="十.埃特巴什码"></a>十.埃特巴什码</h2><p>最后一个字母代表的十第一个字母，倒数第二个字母代表的十第二个字母，如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>明文字母</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+<th>J</th>
+<th>K</th>
+<th>L</th>
+<th>M</th>
+<th>N</th>
+<th>O</th>
+<th>P</th>
+<th>Q</th>
+<th>R</th>
+<th>S</th>
+<th>T</th>
+<th>U</th>
+<th>V</th>
+<th>W</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>密文字母</td>
+<td>Z</td>
+<td>Y</td>
+<td>X</td>
+<td>W</td>
+<td>V</td>
+<td>U</td>
+<td>T</td>
+<td>S</td>
+<td>R</td>
+<td>Q</td>
+<td>P</td>
+<td>O</td>
+<td>N</td>
+<td>M</td>
+<td>L</td>
+<td>K</td>
+<td>J</td>
+<td>I</td>
+<td>H</td>
+<td>G</td>
+<td>F</td>
+<td>E</td>
+<td>D</td>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十一-凯撒密码"><a href="#十一-凯撒密码" class="headerlink" title="十一.凯撒密码"></a>十一.凯撒密码</h2><p>根据如下表排序，如下表是最基础的凯撒密码，就是往右移位，A对应的B，B对应的是C，比如明文是KEN，那么按照下表密文对应的就是LFO。</p>
+<table>
+<thead>
+<tr>
+<th>明文字母</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+<th>J</th>
+<th>K</th>
+<th>L</th>
+<th>M</th>
+<th>N</th>
+<th>O</th>
+<th>P</th>
+<th>Q</th>
+<th>R</th>
+<th>S</th>
+<th>T</th>
+<th>U</th>
+<th>V</th>
+<th>W</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>密文字母</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>H</td>
+<td>I</td>
+<td>J</td>
+<td>K</td>
+<td>L</td>
+<td>M</td>
+<td>N</td>
+<td>O</td>
+<td>P</td>
+<td>Q</td>
+<td>R</td>
+<td>S</td>
+<td>T</td>
+<td>U</td>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Y</td>
+<td>Z</td>
+<td>A</td>
+</tr>
+</tbody></table>
+<p>python代码如下，1代表的是移位。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">caser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    flag <span class="token operator">=</span> <span class="token string">'HelloWorld'</span><span class="token punctuation">.</span>upper<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    dict_txt <span class="token operator">=</span> <span class="token string">'abcdefghijklmnopqrstuvwxyz'</span><span class="token punctuation">.</span>upper<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    dec <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> flag<span class="token punctuation">:</span>
+        dec<span class="token punctuation">.</span>append<span class="token punctuation">(</span>dict_txt<span class="token punctuation">[</span>dict_txt<span class="token punctuation">.</span>index<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>dec<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    caser<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h2 id="十二-仿射密码"><a href="#十二-仿射密码" class="headerlink" title="十二.仿射密码"></a>十二.仿射密码</h2><p>原理是，先将26个字母按照0-25排序也就是(0,1,2,3…25)，密钥为k(a,b)，加密公式为<code>c=Ea,b(m)≡am+b(mod26)</code>，解密公式为<code>m=Da,b(c)≡a-1(c-b)(mod26)</code>。</p>
+<p>如下表是字母索引表</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+<th>J</th>
+<th>K</th>
+<th>L</th>
+<th>M</th>
+<th>N</th>
+<th>O</th>
+<th>P</th>
+<th>Q</th>
+<th>R</th>
+<th>S</th>
+<th>T</th>
+<th>U</th>
+<th>V</th>
+<th>W</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+<td>13</td>
+<td>14</td>
+<td>15</td>
+<td>16</td>
+<td>17</td>
+<td>18</td>
+<td>19</td>
+<td>20</td>
+<td>21</td>
+<td>22</td>
+<td>23</td>
+<td>24</td>
+<td>25</td>
+</tr>
+</tbody></table>
+<h3 id="1-加密-2"><a href="#1-加密-2" class="headerlink" title="1.加密"></a>1.加密</h3><p>例如我这里要加密helloworld加密过程并且密钥是k(7,21)：</p>
+<p>h=7，7*7+21(mod26)=18，h=s</p>
+<p>e=4，7*4+21(mod26)=23，e=x</p>
+<p>l=11，7*11+21(mod26)=20，l=u</p>
+<p>l=11，7*11+21(mod26)=20，l=u</p>
+<p>o=14，7*14+21(mod26)=15，o=p</p>
+<p>w=22，7*22+21(mod26)=19，w=t</p>
+<p>o=14，7*14+21(mod26)=15，o=p</p>
+<p>r=17，7*17+21(mod26)=10，r=k</p>
+<p>l=11，7*11+21(mod26)=20，l=u</p>
+<p>d=3，7*3+21(mod26)=16，d=q</p>
+<p>所以helloworld加密之后的成果是<code>sxuuptpkuq</code>。</p>
+<hr>
+<h3 id="2-解密-2"><a href="#2-解密-2" class="headerlink" title="2.解密"></a>2.解密</h3><p>知道解密公式是<code>m=Da,b(c)≡a-1(c-b)(mod26)&amp;m=D7,21(c)≡7-1(c-21)(mod26)     </code>，密文是<code>sxuuptpkuq</code>，解密过程如下。</p>
+<p>s=18，7^-1*(18-21)(mod26)</p>
+<p>x=23，7^-1*(23-21)(mod26)</p>
+<p>省略。。。。</p>
+<hr>
+<h3 id="3-python代码"><a href="#3-python代码" class="headerlink" title="3.python代码"></a>3.python代码</h3><p>如下是加密代码。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">affine_cipher_en</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    flag <span class="token operator">=</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">'请输入你要加密的明文:'</span><span class="token punctuation">)</span>
+    k_a <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入密钥中的第一个值a："</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    k_b <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入密钥中的第一个值b:"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    flag_list <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span>flag<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    flag_en <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> flag_list<span class="token punctuation">:</span>
+        flag_en<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>k_a <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">97</span><span class="token punctuation">)</span> <span class="token operator">+</span> k_b<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">26</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">97</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>flag_en<span class="token punctuation">)</span><span class="token punctuation">)</span>
+affine_cipher_en<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如下是python解密代码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#解密脚本</span>
+<span class="token keyword">def</span> <span class="token function">affine_cipher_de</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    flag <span class="token operator">=</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">'请输入你要解密的明文:'</span><span class="token punctuation">)</span>
+    k_a <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入密钥中的第一个值a："</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    k_b <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"请输入密钥中的第一个值b:"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    flag_list <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span>flag<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    flag_de <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> flag_list<span class="token punctuation">:</span>
+        flag_de<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">chr</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">15</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token builtin">ord</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">97</span> <span class="token operator">-</span> k_b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">26</span> <span class="token operator">+</span> <span class="token number">97</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>flag_de<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h2 id="十三-棋盘密码"><a href="#十三-棋盘密码" class="headerlink" title="十三.棋盘密码"></a>十三.棋盘密码</h2><p>棋盘密码就是将26个字母放在5x5的方格子里面，ij放在一个格子里面，具体如下表👇。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">a</td>
+<td align="center">b</td>
+<td align="center">c</td>
+<td align="center">d</td>
+<td align="center">e</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">f</td>
+<td align="center">g</td>
+<td align="center">h</td>
+<td align="center">i/j</td>
+<td align="center">k</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">l</td>
+<td align="center">m</td>
+<td align="center">n</td>
+<td align="center">o</td>
+<td align="center">p</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">q</td>
+<td align="center">r</td>
+<td align="center">s</td>
+<td align="center">t</td>
+<td align="center">u</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">v</td>
+<td align="center">w</td>
+<td align="center">x</td>
+<td align="center">y</td>
+<td align="center">z</td>
+</tr>
+</tbody></table>
+<p>其中特点就是每两个数字编做一组，所有的数字都在1-5之间浮动，并且是先列后行的顺序排序。</p>
+<p>比如<code>25 15 33</code>，所对应的就是<code>Ken</code></p>
+<hr>
+<h2 id="十四-普莱费尔密码"><a href="#十四-普莱费尔密码" class="headerlink" title="十四.普莱费尔密码"></a>十四.普莱费尔密码</h2><p>假设密钥是<code>kensb</code>，那么排序之后如下表，前面和单表代换一样，假设明文是<code>stegab</code></p>
+<table>
+<thead>
+<tr>
+<th>k</th>
+<th>e</th>
+<th>n</th>
+<th>s</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>C</td>
+<td>D</td>
+<td>F</td>
+<td>G</td>
+</tr>
+<tr>
+<td>H</td>
+<td>I/J</td>
+<td>L</td>
+<td>M</td>
+<td>O</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Q</td>
+<td>R</td>
+<td>T</td>
+<td>U</td>
+</tr>
+<tr>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Y</td>
+<td>Z</td>
+</tr>
+</tbody></table>
+<p>加密原理就是如果假设需要加密明文里面的s对应的是p1,t对应的是p2，</p>
+<p>1.那么p1，p2在同一行则对应的密文就是紧靠p1，p2右端的字母。</p>
+<p>2.如果p1，p2在同一列则对应的密文分别是仅靠p1，p2下端的字母。</p>
+<p>3.如果p1，p2不在同一列也不再同一行，那么对应的密文应该是p1，p2为对角顶点确定的矩阵的另外的两个顶点字母，按照同行原则对应。</p>
+<p>加密效果如下表。</p>
+<table>
+<thead>
+<tr>
+<th>st</th>
+<th>eg</th>
+<th>ab</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FY</td>
+<td>BC</td>
+<td>GK</td>
+</tr>
+</tbody></table>
+<p>解密就是加密过程。</p>
+<p>第二篇链接👉<a target="_blank" rel="noopener" href="https://blog.takagisan.top/2022/02dd678d5e.html">CTF常见密码学(二)</a>。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">坂琴</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.takagisan.top/2022/027896669f.html">https://www.takagisan.top/2022/027896669f.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">坂琴</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">
+                                    <span class="chip bg-color">密码学</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '2CRS1n25zIYnK5HeDRr1ExBy-gzGzoHsz',
+        appKey: 'aIkJLkdDDj3qV85F5tSx4CnB',
+        notify: 'true' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '☆*: .｡. o(≧▽≦)o .｡.:*☆/请输入你的邮箱，昵称和网址吧！'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/02dd678d5e.html">
+                    <div class="card-image">
+                        
+                        <img src="/images/twopeople.jpg" class="responsive-img" alt="CTF中常见密码学(二)">
+                        
+                        <span class="card-title">CTF中常见密码学(二)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CTF中常见的密码学(二)
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-05
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">
+                        <span class="chip bg-color">密码学</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/01812cc16c.html">
+                    <div class="card-image">
+                        
+                        <img src="/images/crypto.png" class="responsive-img" alt="BUUCTF-Crypto第一页(Md5-信息化时代步伐)解题思路">
+                        
+                        <span class="card-title">BUUCTF-Crypto第一页(Md5-信息化时代步伐)解题思路</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Buuctf-Crypto第一页(MD5-信息化时代步伐)解题思路
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/BUUCTF/">
+                        <span class="chip bg-color">BUUCTF</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">
+                        <span class="chip bg-color">密码学</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7413239070"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.5'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2025</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">坂琴</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">81.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+			
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2022";
+                        var startMonth = "1";
+                        var startDate = "20";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+                <span id="icp"><img src="/medias/icp.png"
+                                    style="vertical-align: text-bottom;"/>
+                <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=50011802010852" target="_blank">渝公网安备 50011802010852号</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
+				<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">渝ICP备2023009623号</a>
+            </span>
+		 
+			
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/SukiTakagisan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2125760270@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="https://twitter.com/Takagis97136578" class="tooltipped" target="_blank" data-tooltip="博主的推特: https://twitter.com/Takagis97136578" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2125760270" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2125760270" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/yu-qi-cai-hong-mao" class="tooltipped" target="_blank" data-tooltip="博主的知乎: https://www.zhihu.com/people/yu-qi-cai-hong-mao" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+<!-- 
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+ -->
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+		 	
+		 
+
+
+
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+    
+    <!-- 爆炸效果 -->
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <!-- 樱花飘落 -->
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+        }
+    </script>
+
+    <!--崩溃欺骗-->
+    <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+</body>
+
+</html>

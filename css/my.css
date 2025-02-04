@@ -1,0 +1,7 @@
+/* Here is your custom css styles. */
+* {
+  cursor: url("miku1.png"), auto !important;
+}
+:active {
+  cursor: url("pointer.cur"), auto !important;
+}
