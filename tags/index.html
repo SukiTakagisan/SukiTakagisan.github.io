@@ -178,6 +178,52 @@
          <div></div>
      </div>
  </div><body>
+	<svg aria-hidden="true" style="position: absolute; overflow: hidden; width: 0; height: 0">
+        <symbol id="icon-sun" viewBox="0 0 1024 1024">
+          <path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path>
+          <path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path>
+          <path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path>
+          <path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path>
+        </symbol>
+        <symbol id="icon-moon" viewBox="0 0 1024 1024">
+          <path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path>
+          <path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path>
+        </symbol>
+      </svg>
+      <a onclick="switchNightMode()" class="icon-V hidden" title="切换主题">
+        <svg width="48" height="48" viewBox="0 0 1024 1024">
+          <use id="modeicon" xlink:href="#icon-moon"></use>
+        </svg>
+      </a>
+<script>
+      function checkNightMode() {
+        '1' === localStorage.getItem('isDark') ? ($('body').addClass('DarkMode'), $('#changeMode-top').removeClass('fa-moon').addClass('fa-sun'), $('#modeicon').attr('xlink:href', '#icon-sun')) : '0' === localStorage.getItem('isDark') ? $('#modeicon').attr('xlink:href', '#icon-moon') : new Date().getHours() >= 20 || new Date().getHours() < 7 ? ($('body').addClass('DarkMode'), $('#changeMode-top').removeClass('fa-moon').addClass('fa-sun'), $('#modeicon').attr('xlink:href', '#icon-sun')) : matchMedia('(prefers-color-scheme: dark)').matches ? ($('body').addClass('DarkMode'), $('#changeMode-top').removeClass('fa-moon').addClass('fa-sun'), $('#modeicon').attr('xlink:href', '#icon-sun')) : $('#modeicon').attr('xlink:href', '#icon-moon')
+      }
+      function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+          setTimeout(function () {
+            $('body').hasClass('DarkMode') ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#changeMode-top').removeClass('fa-sun').addClass('fa-moon'), $('#modeicon').attr('xlink:href', '#icon-moon')) : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#changeMode-top').removeClass('fa-moon').addClass('fa-sun'), $('#modeicon').attr('xlink:href', '#icon-sun')),
+              setTimeout(function () {
+                $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                  $(this).remove()
+                })
+              }, 2e3)
+          })
+      }
+      function switchNightModeTop() {
+        $('body').hasClass('DarkMode') ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#changeMode-top').removeClass('fa-sun').addClass('fa-moon'), $('#modeicon').attr('xlink:href', '#icon-moon')) : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#changeMode-top').removeClass('fa-moon').addClass('fa-sun'), $('#modeicon').attr('xlink:href', '#icon-sun'))
+      }
+    </script>
+
+<div class="stars-con">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>  
+    </div>
+
+
+
+
     <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
@@ -540,46 +586,10 @@
             <div class="tag-chips">
                 
                 
-                <a href="/tags/CTF/" title="CTF: 14">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="CTF" style="background-color: #F9EBEA;">CTF
-                        <span class="tag-length">14</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/BUUCTF/" title="BUUCTF: 9">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="BUUCTF" style="background-color: #F5EEF8;">BUUCTF
-                        <span class="tag-length">9</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Web/" title="Web: 5">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="Web" style="background-color: #D5F5E3;">Web
-                        <span class="tag-length">5</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学: 7">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="密码学" style="background-color: #E8F8F5;">密码学
-                        <span class="tag-length">7</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/tags/%E7%B3%BB%E7%BB%9F%E5%8A%A0%E5%9B%BA/" title="系统加固: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="系统加固" style="background-color: #FEF9E7;">系统加固
+                            data-tagname="系统加固" style="background-color: #F9EBEA;">系统加固
                         <span class="tag-length">2</span>
                     </span>
                 </a>
@@ -588,8 +598,35 @@
                 <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全: 4">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="网络安全" style="background-color: #F8F9F9;">网络安全
+                            data-tagname="网络安全" style="background-color: #F5EEF8;">网络安全
                         <span class="tag-length">4</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/BUUCTF/" title="BUUCTF: 9">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="BUUCTF" style="background-color: #D5F5E3;">BUUCTF
+                        <span class="tag-length">9</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/CTF/" title="CTF: 14">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="CTF" style="background-color: #E8F8F5;">CTF
+                        <span class="tag-length">14</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" title="密码学: 7">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="密码学" style="background-color: #FEF9E7;">密码学
+                        <span class="tag-length">7</span>
                     </span>
                 </a>
                 
@@ -597,8 +634,17 @@
                 <a href="/tags/Misc/" title="Misc: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="Misc" style="background-color: #82E0AA;">Misc
+                            data-tagname="Misc" style="background-color: #F8F9F9;">Misc
                         <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Web/" title="Web: 5">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Web" style="background-color: #82E0AA;">Web
+                        <span class="tag-length">5</span>
                     </span>
                 </a>
                 
@@ -711,19 +757,19 @@
                 </a>
                 
                 
-                <a href="/tags/nmap%E7%94%A8%E6%B3%95/" title="nmap用法: 1">
+                <a href="/tags/test/" title="test: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="nmap用法" style="background-color: #F8F9F9;">nmap用法
+                            data-tagname="test" style="background-color: #F8C471;">test
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/test/" title="test: 1">
+                <a href="/tags/nmap%E7%94%A8%E6%B3%95/" title="nmap用法: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="test" style="background-color: #F8C471;">test
+                            data-tagname="nmap用法" style="background-color: #F8F9F9;">nmap用法
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -765,19 +811,19 @@
                 </a>
                 
                 
-                <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" title="博客搭建: 2">
+                <a href="/tags/Matery%E4%B8%BB%E9%A2%98/" title="Matery主题: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="博客搭建" style="background-color: #F8F9F9;">博客搭建
+                            data-tagname="Matery主题" style="background-color: #FFF;">Matery主题
                         <span class="tag-length">2</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/Matery%E4%B8%BB%E9%A2%98/" title="Matery主题: 2">
+                <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" title="博客搭建: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="Matery主题" style="background-color: #FFF;">Matery主题
+                            data-tagname="博客搭建" style="background-color: #F8F9F9;">博客搭建
                         <span class="tag-length">2</span>
                     </span>
                 </a>
@@ -810,15 +856,6 @@
                 </a>
                 
                 
-                <a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="防火墙" style="background-color: #F9E79F;">防火墙
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/tags/JavaScript/" title="JavaScript: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
@@ -846,11 +883,11 @@
                 </a>
                 
                 
-                <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C/" title="我的世界: 2">
+                <a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="我的世界" style="background-color: #85C1E9;">我的世界
-                        <span class="tag-length">2</span>
+                            data-tagname="防火墙" style="background-color: #F9E79F;">防火墙
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -860,6 +897,15 @@
                              chip-default "
                             data-tagname="Kali虚拟机" style="background-color: #82E0AA;">Kali虚拟机
                         <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C/" title="我的世界: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="我的世界" style="background-color: #85C1E9;">我的世界
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
@@ -905,7 +951,7 @@
 <script type="text/javascript">
     
 
-    $('#tag-wordcloud').jQCloud([{"text":"CTF","weight":14,"link":"/tags/CTF/"},{"text":"BUUCTF","weight":9,"link":"/tags/BUUCTF/"},{"text":"Web","weight":5,"link":"/tags/Web/"},{"text":"密码学","weight":7,"link":"/tags/密码学/"},{"text":"系统加固","weight":2,"link":"/tags/系统加固/"},{"text":"网络安全","weight":4,"link":"/tags/网络安全/"},{"text":"Misc","weight":2,"link":"/tags/Misc/"},{"text":"AWD","weight":4,"link":"/tags/AWD/"},{"text":"靶场","weight":24,"link":"/tags/靶场/"},{"text":"Windows系统","weight":1,"link":"/tags/Windows系统/"},{"text":"Linux系统","weight":1,"link":"/tags/Linux系统/"},{"text":"EVE-NG","weight":1,"link":"/tags/EVE-NG/"},{"text":"虚拟机","weight":2,"link":"/tags/虚拟机/"},{"text":"Typora","weight":2,"link":"/tags/Typora/"},{"text":"Markdown","weight":2,"link":"/tags/Markdown/"},{"text":"Python","weight":2,"link":"/tags/Python/"},{"text":"编程","weight":3,"link":"/tags/编程/"},{"text":"Vulnhub","weight":16,"link":"/tags/Vulnhub/"},{"text":"java","weight":2,"link":"/tags/java/"},{"text":"nmap用法","weight":1,"link":"/tags/nmap用法/"},{"text":"test","weight":1,"link":"/tags/test/"},{"text":"zip压缩包","weight":1,"link":"/tags/zip压缩包/"},{"text":"伪加密","weight":1,"link":"/tags/伪加密/"},{"text":"碎知识","weight":3,"link":"/tags/碎知识/"},{"text":"Hexo","weight":5,"link":"/tags/Hexo/"},{"text":"博客搭建","weight":2,"link":"/tags/博客搭建/"},{"text":"Matery主题","weight":2,"link":"/tags/Matery主题/"},{"text":"C语言","weight":1,"link":"/tags/C语言/"},{"text":"游戏","weight":1,"link":"/tags/游戏/"},{"text":"心情记录","weight":2,"link":"/tags/心情记录/"},{"text":"防火墙","weight":1,"link":"/tags/防火墙/"},{"text":"JavaScript","weight":1,"link":"/tags/JavaScript/"},{"text":"PHP","weight":1,"link":"/tags/PHP/"},{"text":"html","weight":1,"link":"/tags/html/"},{"text":"我的世界","weight":2,"link":"/tags/我的世界/"},{"text":"Kali虚拟机","weight":1,"link":"/tags/Kali虚拟机/"},{"text":"网站收录","weight":1,"link":"/tags/网站收录/"},{"text":"DVWA靶场","weight":1,"link":"/tags/DVWA靶场/"}], {
+    $('#tag-wordcloud').jQCloud([{"text":"系统加固","weight":2,"link":"/tags/系统加固/"},{"text":"网络安全","weight":4,"link":"/tags/网络安全/"},{"text":"BUUCTF","weight":9,"link":"/tags/BUUCTF/"},{"text":"CTF","weight":14,"link":"/tags/CTF/"},{"text":"密码学","weight":7,"link":"/tags/密码学/"},{"text":"Misc","weight":2,"link":"/tags/Misc/"},{"text":"Web","weight":5,"link":"/tags/Web/"},{"text":"AWD","weight":4,"link":"/tags/AWD/"},{"text":"靶场","weight":24,"link":"/tags/靶场/"},{"text":"Windows系统","weight":1,"link":"/tags/Windows系统/"},{"text":"Linux系统","weight":1,"link":"/tags/Linux系统/"},{"text":"EVE-NG","weight":1,"link":"/tags/EVE-NG/"},{"text":"虚拟机","weight":2,"link":"/tags/虚拟机/"},{"text":"Typora","weight":2,"link":"/tags/Typora/"},{"text":"Markdown","weight":2,"link":"/tags/Markdown/"},{"text":"Python","weight":2,"link":"/tags/Python/"},{"text":"编程","weight":3,"link":"/tags/编程/"},{"text":"Vulnhub","weight":16,"link":"/tags/Vulnhub/"},{"text":"java","weight":2,"link":"/tags/java/"},{"text":"test","weight":1,"link":"/tags/test/"},{"text":"nmap用法","weight":1,"link":"/tags/nmap用法/"},{"text":"zip压缩包","weight":1,"link":"/tags/zip压缩包/"},{"text":"伪加密","weight":1,"link":"/tags/伪加密/"},{"text":"碎知识","weight":3,"link":"/tags/碎知识/"},{"text":"Hexo","weight":5,"link":"/tags/Hexo/"},{"text":"Matery主题","weight":2,"link":"/tags/Matery主题/"},{"text":"博客搭建","weight":2,"link":"/tags/博客搭建/"},{"text":"C语言","weight":1,"link":"/tags/C语言/"},{"text":"游戏","weight":1,"link":"/tags/游戏/"},{"text":"心情记录","weight":2,"link":"/tags/心情记录/"},{"text":"JavaScript","weight":1,"link":"/tags/JavaScript/"},{"text":"PHP","weight":1,"link":"/tags/PHP/"},{"text":"html","weight":1,"link":"/tags/html/"},{"text":"防火墙","weight":1,"link":"/tags/防火墙/"},{"text":"Kali虚拟机","weight":1,"link":"/tags/Kali虚拟机/"},{"text":"我的世界","weight":2,"link":"/tags/我的世界/"},{"text":"网站收录","weight":1,"link":"/tags/网站收录/"},{"text":"DVWA靶场","weight":1,"link":"/tags/DVWA靶场/"}], {
         autoResize: true
     });
 </script>
@@ -1114,6 +1160,7 @@
  -->
 </div>
     </div>
+	
 </footer>
 
 <div class="progress-bar"></div>
@@ -1235,7 +1282,6 @@ $(function () {
         <i class="fas fa-arrow-up"></i>
     </a>
 </div>
-
 
     <script src="/libs/materialize/materialize.min.js"></script>
     <script src="/libs/masonry/masonry.pkgd.min.js"></script>
