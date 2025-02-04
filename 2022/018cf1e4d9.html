@@ -640,21 +640,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-23
+                    2025-02-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    423
+                    658
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -677,31 +677,114 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><a target="_blank" rel="noopener" href="https://gitee.com/jingxiang25/hexo-theme-matery#front-matter-%E9%80%89%E9%A1%B9%E8%AF%A6%E8%A7%A3">https://gitee.com/jingxiang25/hexo-theme-matery#front-matter-%E9%80%89%E9%A1%B9%E8%AF%A6%E8%A7%A3</a></p>
-<pre class="line-numbers language-none"><code class="language-none">title: typora-vue-theme主题介绍 	 #文章标题
-date: 2018-09-07 09:25:00			#发布时间
-author: 赵奇						   #文章作者
-img: &#x2F;source&#x2F;images&#x2F;xxx.jpg			#文章特征图
-top: true							#是否置顶
-hide: false							#隐藏文章
-cover: true							#表示该文章是否需要加入到首页轮播封面中
-coverImg: &#x2F;images&#x2F;1.jpg	表示该文章在首页轮播封面需要显示的图片路径，如果没有，则默认使用文章的特色图片
-password: #文章阅读密码，如果要对文章设置阅读验证密码的话，就可以设置 password 的值，该值必须是用 SHA256 加密后的密码，防止被他人识破。前提是在主题的 config.yml 中激活了 verifyPassword 选项
+                <p>2025年2月5日重新更新</p>
+<p>搬运文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/howareyou2104/article/details/106312703">如何用Hexo优雅的书写文章_hexo首行缩进-CSDN博客</a></p>
+<table>
+<thead>
+<tr>
+<th>配置选项</th>
+<th>默认值</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>Markdown 的文件标题</td>
+<td align="center">文章标题，强烈建议填写此选项</td>
+</tr>
+<tr>
+<td>date</td>
+<td>文件创建时的日期时间</td>
+<td align="center">发布时间，强烈建议填写此选项，且最好保证全局唯一</td>
+</tr>
+<tr>
+<td>author</td>
+<td>根 <code>_config.yml</code> 中的 author</td>
+<td align="center">文章作者</td>
+</tr>
+<tr>
+<td>img</td>
+<td>featureImages 中的某个值</td>
+<td align="center">文章特征图，推荐使用图床(腾讯云、七牛云、又拍云等)来做图片的路径.如: <a target="_blank" rel="noopener" href="http://xxx.com/xxx.jpg">http://xxx.com/xxx.jpg</a></td>
+</tr>
+<tr>
+<td>top</td>
+<td>true</td>
+<td align="center">推荐文章（文章是否置顶），如果 top 值为 true，则会作为首页推荐文章</td>
+</tr>
+<tr>
+<td>cover</td>
+<td>false</td>
+<td align="center">v1.0.2版本新增，表示该文章是否需要加入到首页轮播封面中</td>
+</tr>
+<tr>
+<td>coverImg</td>
+<td>无</td>
+<td align="center">v1.0.2版本新增，表示该文章在首页轮播封面需要显示的图片路径，如果没有，则默认使用文章的特色图片</td>
+</tr>
+<tr>
+<td>password</td>
+<td>无</td>
+<td align="center">文章阅读密码，如果要对文章设置阅读验证密码的话，就可以设置 password 的值，该值必须是用 SHA256 加密后的密码，防止被他人识破。前提是在主题的 config.yml 中激活了 verifyPassword 选项</td>
+</tr>
+<tr>
+<td>toc</td>
+<td>true</td>
+<td align="center">是否开启 TOC，可以针对某篇文章单独关闭 TOC 的功能。前提是在主题的 config.yml 中激活了 toc 选项</td>
+</tr>
+<tr>
+<td>mathjax</td>
+<td>false</td>
+<td align="center">是否开启数学公式支持 ，本文章是否开启 mathjax，且需要在主题的 _config.yml 文件中也需要开启才行</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>无</td>
+<td align="center">文章摘要，自定义的文章摘要内容，如果这个属性有值，文章卡片摘要就显示这段文字，否则程序会自动截取文章的部分内容作为摘要</td>
+</tr>
+<tr>
+<td>categories</td>
+<td>无</td>
+<td align="center">文章分类，本主题的分类表示宏观上大的分类，只建议一篇文章一个分类</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>无</td>
+<td align="center">文章标签，一篇文章可以多个标签</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>文章标题</td>
+<td align="center">文章关键字，SEO 时需要</td>
+</tr>
+<tr>
+<td>reprintPolicy</td>
+<td>cc_by</td>
+<td align="center">文章转载规则， 可以是 cc_by, cc_by_nd, cc_by_sa, cc_by_nc, cc_by_nc_nd, cc_by_nc_sa, cc0, noreprint 或 pay 中的一个</td>
+</tr>
+</tbody></table>
+<br>
 
-toc: false #是否开启 TOC，可以针对某篇文章单独关闭 TOC 的功能。前提是在主题的 config.yml 中激活了 toc 选项
-
-mathjax: false #是否开启数学公式支持 ，本文章是否开启 mathjax，且需要在主题的 _config.yml 文件中也需要开启才行
-
+<pre class="line-numbers language-none"><code class="language-none">---
+title: typora-vue-theme主题介绍
+date: 2018-09-07 09:25:00
+author: 赵奇
+img: &#x2F;source&#x2F;images&#x2F;xxx.jpg
+top: true
+cover: true
+coverImg: &#x2F;images&#x2F;1.jpg
+password: 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92
+toc: false
+mathjax: false
 summary: 这是你自定义的文章摘要内容，如果这个属性有值，文章卡片摘要就显示这段文字，否则程序会自动截取文章的部分内容作为摘要
-
-categories: Markdown #文章分类，本主题的分类表示宏观上大的分类，只建议一篇文章一个分类
-tags:  #文章标签，一篇文章可以多个标签
+categories: Markdown
+tags:
   - Typora
   - Markdown
+---
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-keywords: #文章关键字，SEO 时需要
-
-reprintPolicy: 文章转载规则， 可以是 cc_by, cc_by_nd, cc_by_sa, cc_by_nc, cc_by_nc_nd, cc_by_nc_sa, cc0, noreprint 或 pay 中的一个<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>只搬运了我自己常用的，剩下的可以去看原文章</p>
 
                 
             </div>
@@ -1250,12 +1333,12 @@ reprintPolicy: 文章转载规则， 可以是 cc_by, cc_by_nd, cc_by_sa, cc_by_
                         <span class="chip bg-color">Hexo</span>
                     </a>
                     
-                    <a href="/tags/Matery%E4%B8%BB%E9%A2%98/">
-                        <span class="chip bg-color">Matery主题</span>
-                    </a>
-                    
                     <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
                         <span class="chip bg-color">博客搭建</span>
+                    </a>
+                    
+                    <a href="/tags/Matery%E4%B8%BB%E9%A2%98/">
+                        <span class="chip bg-color">Matery主题</span>
                     </a>
                     
                 </div>
@@ -1512,7 +1595,7 @@ reprintPolicy: 文章转载规则， 可以是 cc_by, cc_by_nd, cc_by_sa, cc_by_
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">81.3k</span>
+                        class="white-color">83k</span>
             
             
             
