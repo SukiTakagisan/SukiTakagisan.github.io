@@ -475,7 +475,9 @@ mark {
 }
 
 .bg-color {
-  background-image: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(220.55deg, #FF8570 0%, #418CB7 100%);
+  /*background-image: linear-gradient(to right, #667eea 0%, #764ba2 100%);*/
+  opacity: 0.8;
 }
 
 .text-color {

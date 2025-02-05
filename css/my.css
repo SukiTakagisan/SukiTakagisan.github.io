@@ -5,3 +5,11 @@
 :active {
   cursor: url("pointer.cur"), auto !important;
 }
+@font-face{
+    font-family: 'myFont';
+    src: url('../font/Y-B008YeZiGongChangDanDanHei-2.ttf');
+}
+
+body{
+    font-family: 'myFont';
+}
